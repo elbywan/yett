@@ -1,6 +1,10 @@
 # Script blocker
 
+### 🔐 A small webpage library to control external script execution
+
 ##### Simply drop script-blocker on top of your html and it will allow you to block and delay the execution of other scripts.
+
+[![Browsers](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17)](#browser-compatibility)
 
 ## Why?
 
@@ -19,6 +23,9 @@ And start uploading data immediately.
 So, at this point you have two options :
 
 - Try looking at the minified code yourself, extract the IDs contained inside and make the call toggleable yourself.
+
+Or:
+
 - Drop script-blocker on top of the page, add a blacklist and let it do its magic ✨.
 
 ----------
@@ -87,6 +94,8 @@ Otherwise, only blacklist regexes that match any of the `scriptUrls` provided wi
 
 The most 'advanced' javascript feature that `script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
+For compatibility with `IE 9/10` consider using a [polyfill](https://github.com/webmodules/mutation-observer)!
+
 ### Caveats
 
 #### Add a type property to the scripts tags
@@ -94,7 +103,7 @@ The most 'advanced' javascript feature that `script-blocker` uses is [MutationOb
 **If you want to target `Microsoft Edge` or `Internet Explorer` users, then you should read this!**
 
 
-In order to support script tag blocking with `Edge` or `IE`, you will have to add an attribute yourself on script tags that need to be blocked.
+In order to support script tag blocking with `Edge` or `IE11`, you will have to add an attribute yourself on script tags that need to be blocked.
 
 ```html
 <!-- Add type="javascript/blocked" yourself, otherwise it will only work on Chrome/Firefox/Safari -->
