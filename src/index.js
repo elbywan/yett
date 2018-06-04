@@ -6,13 +6,11 @@ const TYPE_ATTRIBUTE = 'javascript/blocked'
 let disableBlocker = false
 // Backup of the blacklisted script nodes
 let blackListedScripts = []
-// <head>
-const head = document.getElementsByTagName('head')[0]
 
 const needsToBeBlacklisted = (src, type) => (
     !disableBlocker &&
     (!type || type !== TYPE_ATTRIBUTE) &&
-    blacklistedPatterns.some(entry => entry.test(src))
+    blacklistedPatterns.some(pattern => pattern.test(src))
 )
 
 /* 1st part - setup a mutation observer to track DOM insertion */
@@ -32,23 +30,17 @@ const observer = new MutationObserver(mutations => {
                     // Blocks inline script execution in Safari & Chrome
                     node.type = TYPE_ATTRIBUTE
 
-                    // Safari has this additional event which prevents scripts from loading
-                    node.addEventListener('beforeload', function (event) {
-                        // Prevent only marked scripts from loading
-                        if(node.getAttribute('type') === TYPE_ATTRIBUTE)
-                            event.preventDefault()
-                    })
-
                     // Firefox has this additional event which prevents scripts from beeing executed
-                    node.addEventListener('beforescriptexecute', function (event) {
+                    const beforeScriptExecuteListener = function (event) {
                         // Prevent only marked scripts from executing
                         if(node.getAttribute('type') === TYPE_ATTRIBUTE)
                             event.preventDefault()
-                    })
+                        node.removeEventListener('beforescriptexecute', beforeScriptExecuteListener)
+                    }
+                    node.addEventListener('beforescriptexecute', beforeScriptExecuteListener)
 
                     // Remove the node from the DOM
                     node.parentElement.removeChild(node)
-                    // console.log('Blacklisted scripts', blackListedScripts)
                 }
             }
         })
@@ -134,28 +126,22 @@ export const unblock = function(...scriptUrls) {
     }
 
     // Parse existing script tags with a marked type
-    Array.from(document.getElementsByTagName('script')).forEach(script => {
-        if(script.getAttribute('type') === TYPE_ATTRIBUTE && unblockCheck(script)) {
+    Array.from(document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)).forEach(script => {
+        if(unblockCheck(script)) {
             script.type = 'application/javascript'
             blackListedScripts.push(script)
             script.parentElement.removeChild(script)
         }
     })
-    /* Blacklisted */
+
+    // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
     blackListedScripts = blackListedScripts.reduce((acc, script) => {
         if(unblockCheck(script)) {
             const scriptNode = document.createElement('script')
             scriptNode.setAttribute('src', script.src)
-            head.appendChild(scriptNode)
+            document.head.appendChild(scriptNode)
             return acc
         }
         return [...acc, script]
     }, [])
-    blackListedScripts.forEach(script => {
-        if(unblockCheck(script)) {
-            const scriptNode = document.createElement('script')
-            scriptNode.setAttribute('src', script.src)
-            head.appendChild(scriptNode)
-        }
-    })
 }
