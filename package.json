@@ -1,0 +1,33 @@
+{
+  "name": "script-blocker",
+  "version": "0.1.0",
+  "description": "A small library that can prevent other scripts from executing.",
+  "main": "dist/script-blocker.min.js",
+  "keywords": [
+    "block",
+    "blocker",
+    "script-blocker"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snipsco/script-blocker"
+  },
+  "bugs": {
+    "url": "https://github.com/snipsco/script-blocker/issues"
+  },
+  "scripts": {
+    "build": "rollup -c && rollup -c --o docs/lib/script-blocker.min.js",
+    "watch": "rollup -c -w -o docs/lib/script-blocker.min.js",
+    "serve": "http-server -c-1 docs",
+    "dev": "concurrently \"npm run watch\" \"npm run serve\""
+  },
+  "author": "Julien Elbaz",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "http-server": "^0.11.1",
+    "rollup": "^0.59.4",
+    "rollup-plugin-uglify": "^4.0.0",
+    "uglify-es": "^3.3.9"
+  }
+}
