@@ -14,17 +14,17 @@
     </script>
     <script src="./lib/script-blocker.min.js"></script>
     <script src="http://192.168.167.96:8080/inline.js" type="javascript/blocked"></script>
-    <script>
-        (function() {
-            const script = document.createElement('script')
-            script.setAttribute('src', 'http://192.168.167.96:8080/dynamic.js')
-            script.setAttribute('type', 'application/javascript')
-            document.getElementsByTagName('head')[0].appendChild(script)
-        })()
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.development.js"></script>
 </head>
 <body>
+    <script>
+        (function() {
+            var script = document.createElement('script')
+            script.setAttribute('src', 'http://192.168.167.96:8080/dynamic.js')
+            script.setAttribute('type', 'application/javascript')
+            document.head.appendChild(script)
+        })()
+    </script>
     <p>
         This page includes two scripts.<br/>
         <ol>

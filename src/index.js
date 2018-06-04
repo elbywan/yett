@@ -55,7 +55,10 @@ observer.observe(document.documentElement, {
 
 /* 2nd part - Monkey patch the createElement method to prevent dynamic scripts from executing */
 
-const originalDescriptors = Object.getOwnPropertyDescriptors(HTMLScriptElement.prototype)
+const originalDescriptors = {
+    src: Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src'),
+    type: Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'type')
+}
 const createElementBackup = document.createElement
 
 document.createElement = function(...args) {
@@ -126,13 +129,22 @@ export const unblock = function(...scriptUrls) {
     }
 
     // Parse existing script tags with a marked type
-    Array.from(document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)).forEach(script => {
+    const tags = document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)
+    for(let i = 0; i < tags.length; i++) {
+        const script = tags[i]
         if(unblockCheck(script)) {
             script.type = 'application/javascript'
             blackListedScripts.push(script)
             script.parentElement.removeChild(script)
         }
-    })
+    }
+    // Array.from(document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)).forEach(script => {
+    //     if(unblockCheck(script)) {
+    //         script.type = 'application/javascript'
+    //         blackListedScripts.push(script)
+    //         script.parentElement.removeChild(script)
+    //     }
+    // })
 
     // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
     blackListedScripts = blackListedScripts.reduce((acc, script) => {

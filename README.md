@@ -94,16 +94,20 @@ Otherwise, only blacklist regexes that match any of the `scriptUrls` provided wi
 
 The most 'advanced' javascript feature that `script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
-For compatibility with `IE 9/10` consider using a [polyfill](https://github.com/webmodules/mutation-observer)!
+For compatibility with `IE 9/10` consider using a [polyfill](https://github.com/megawac/MutationObserver.js):
+
+```js
+<script src="//cdn.jsdelivr.net/npm/mutationobserver-shim/dist/mutationobserver.min.js"></script>
+```
 
 ### Caveats
 
 #### Add a type property to the scripts tags
 
-**If you want to target `Microsoft Edge` or `Internet Explorer` users, then you should read this!**
+**If you want to target `Microsoft Edge` users, then you should read this!**
 
 
-In order to support script tag blocking with `Edge` or `IE11`, you will have to add an attribute yourself on script tags that need to be blocked.
+In order to support script tag blocking with `Edge`, you will have to add an attribute yourself on script tags that need to be blocked.
 
 ```html
 <!-- Add type="javascript/blocked" yourself, otherwise it will only work on Chrome/Firefox/Safari -->

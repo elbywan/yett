@@ -24,9 +24,13 @@
   "author": "Julien Elbaz",
   "license": "MIT",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
     "concurrently": "^3.5.1",
     "http-server": "^0.11.1",
     "rollup": "^0.59.4",
+    "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-uglify": "^4.0.0",
     "uglify-es": "^3.3.9"
   }
