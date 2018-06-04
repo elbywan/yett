@@ -22,6 +22,10 @@
     "dev": "concurrently \"npm run watch\" \"npm run serve\""
   },
   "author": "Julien Elbaz",
+  "contributors": [
+    { "name": "Julien Elbaz" },
+    { "name": "Jonas Ohlsson Aden" }
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
