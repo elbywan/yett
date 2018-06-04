@@ -2,7 +2,7 @@
 
 ### 🔐 A small webpage library to control external script execution
 
-##### Simply drop script-blocker on top of your html and it will allow you to block and delay the execution of other scripts.
+##### Simply drop script-blocker at the top of your html and it will allow you to block and delay the execution of other scripts.
 
 [![Browsers](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17)](#browser-compatibility)
 
@@ -10,7 +10,7 @@
 
 I know, the obvious question right now is:
 
-`Why the hell should I block scripts on my own website ❗️❓`
+**`Why the hell should I block scripts on my own website ❗❓`**
 
 We at [Snips](https://snips.ai) have encountered the following use case:
 
@@ -26,7 +26,7 @@ So, at this point you have two options :
 
 Or:
 
-- Drop script-blocker on top of the page, add a blacklist and let it do its magic ✨.
+- Drop script-blocker at the top of the page, add a blacklist and let it do its magic ✨.
 
 ----------
 
@@ -89,15 +89,28 @@ unblock(...scriptUrls: String[])
 If you don't specify a `scriptUrls` argument, all blocked script will be executed.
 Otherwise, only blacklist regexes that match any of the `scriptUrls` provided will be removed, and only the scripts that are not considered as blacklisted anymore will execute.
 
+### Build locally
+
+```bash
+# Clone
+git clone https://github.com/snipsco/script-blocker
+cd script-blocker
+# Install
+npm i
+# Serves demo @ localhost:8080
+npm run dev
+# Build for release
+npm run build
+```
 
 ## Browser compatibility
 
 The most 'advanced' javascript feature that `script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
-For compatibility with `IE 9/10` consider using a [polyfill](https://github.com/megawac/MutationObserver.js):
+If you absolutely need `IE 9/10` compatibility, then you have to use a [polyfill](https://github.com/megawac/MutationObserver.js):
 
-```js
-<script src="//cdn.jsdelivr.net/npm/mutationobserver-shim/dist/mutationobserver.min.js"></script>
+```html
+<script src="https://cdn.jsdelivr.net/npm/mutationobserver-shim/dist/mutationobserver.min.js"></script>
 ```
 
 ### Caveats
@@ -110,7 +123,7 @@ For compatibility with `IE 9/10` consider using a [polyfill](https://github.com/
 In order to support script tag blocking with `Edge`, you will have to add an attribute yourself on script tags that need to be blocked.
 
 ```html
-<!-- Add type="javascript/blocked" yourself, otherwise it will only work on Chrome/Firefox/Safari -->
+<!-- Add type="javascript/blocked" yourself, otherwise it will "only" work on Chrome/Firefox/Safari/IE -->
 <script src="..." type="javascript/blocked"></script>
 ```
 
@@ -124,7 +137,7 @@ Scripts loaded using XMLHttpRequest and Fetch are not blocked. It would be trivi
 
 ## Suggestions
 
-If you have any request or feedback for us feel free to open an issue!
+If you have any request or feedback for us feel free to open an [issue](https://github.com/snipsco/script-blocker/issues)!
 
 ## License
 
