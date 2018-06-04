@@ -1,18 +1,16 @@
 # Script blocker
 
-#### Monitor scripts execution.
-
-##### Simply drop script-blocker on top of your .html page with a blacklist and it will allow you to block and delay the execution of other scripts.
+##### Simply drop script-blocker on top of your html and it will allow you to block and delay the execution of other scripts.
 
 ## Why?
 
 I know, the obvious question right now is:
 
-`Why the hell should I block scripts inside my own controlled web page ❗️❓`
+`Why the hell should I block scripts on my own website ❗️❓`
 
-We at Snips have encountered the following use case:
+We at [Snips](https://snips.ai) have encountered the following use case:
 
-Suppose that you want to use analytics on your website. And suppose that for you privacy really matters, and that you don't want to track your website users right away, but to actually give them the choice to be tracked (or not).
+Suppose that you want to use analytics on your website. And suppose that for you privacy really matters, and that you don't want to collect analytics from your website users right away, but to actually ask them for their consent first.
 
 Plenty of third party analytics services will ask you to drop minified javascript code inside your html, which will be super convenient but you will have absolutely no control when this code will be executed. And it **will** be executed as soon as the page loads.
 
@@ -27,7 +25,7 @@ So, at this point you have two options :
 
 **Note that script-blocker works for every script, not only analytics.**
 
-*And on a side note, it is technically quite amazing to know that a simple js script can control and monitor other ones, even those included with a script tag.* 😉
+*And on a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
 
 ## Usage
 
@@ -53,7 +51,7 @@ Finally, include script-blocker with a script tag **before** other scripts you w
 <script src='unpkg.com/script-blocker'></script>
 ```
 
-Then, use `window.scriptBlocker.unblock()` to resume the blocked scripts execution.
+Then, use `window.scriptBlocker.unblock()` to resume execution of the blocked scripts.
 
 ### NPM
 
@@ -81,13 +79,13 @@ unblock(...scriptUrls: String[])
 
 > Unblocks blacklisted scripts.
 
-If you don't specify a `scriptUrls` argument, every script will be executed.
-Otherwise, the blacklist regexes that match any of the `scriptUrls` provided will be removed, and only the scripts that are not considered as blacklisted anymore will execute.
+If you don't specify a `scriptUrls` argument, all blocked script will be executed.
+Otherwise, only blacklist regexes that match any of the `scriptUrls` provided will be removed, and only the scripts that are not considered as blacklisted anymore will execute.
 
 
 ## Browser compatibility
 
-The most 'advanced' javascript feature that `script-blocker` uses is [Mutation Observers](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all 4 major browsers as well as `IE11`.
+The most 'advanced' javascript feature that `script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
 ### Caveats
 
