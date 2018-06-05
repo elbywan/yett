@@ -1,8 +1,10 @@
-# Script blocker
+# Analytics Scripts Blocker
 
-### 🔐 A small webpage library to control external script execution
+### 🔐 A small webpage library to control execution of (analytics) scripts
 
-##### Simply drop script-blocker at the top of your html and it will allow you to block and delay the execution of other scripts.
+##### Simply drop analytics-scripts-blocker at the top of your html and it will allow you to block and delay the execution of other scripts.
+
+_Note that analytics-scripts-blocker works for all kinds of scripts, not only analytics._
 
 [![Browsers](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17)](#browser-compatibility)
 
@@ -26,21 +28,19 @@ So, at this point you have two options :
 
 Or:
 
-- Drop script-blocker at the top of the page, add a blacklist and let it do its magic ✨.
+- Drop analytics-scripts-blocker at the top of the page, add a blacklist and let it do its magic ✨.
 
 ----------
-
-**Note that script-blocker works for every script, not only analytics.**
 
 *And on a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
 
 ## Usage
 
-Script-blocker needs a `blacklist`, which is an array of regexes to test urls against.
+analytics-scripts-blocker needs a `blacklist`, which is an array of regexes to test urls against.
 
 ```html
 <script>
-    // Add a global variable *before* script-blocker is loaded.
+    // Add a global variable *before* analytics-script-blocker is loaded.
     SCRIPT_BLOCKER_BLACKLIST = [
         /googletagmanager\.com/,
         /piwik\.php/,
@@ -55,7 +55,7 @@ Script-blocker needs a `blacklist`, which is an array of regexes to test urls ag
 Finally, include script-blocker with a script tag **before** other scripts you want to delay:
 
 ```html
-<script src='unpkg.com/script-blocker'></script>
+<script src='unpkg.com/analytics-scripts-blocker'></script>
 ```
 
 Then, use `window.scriptBlocker.unblock()` to resume execution of the blocked scripts.
@@ -65,7 +65,7 @@ Then, use `window.scriptBlocker.unblock()` to resume execution of the blocked sc
 You can also use npm to install script-blocker:
 
 ```bash
-npm i snipsco/script-blocker
+npm i snipsco/analytics-scripts-blocker
 ```
 
 ```js
@@ -73,7 +73,7 @@ window.SCRIPT_BLOCKER_BLACKLIST = [
     // ... //
 ]
 // Side effects here!
-import { unblock } from 'script-blocker'
+import { unblock } from 'analytics-script-blocker'
 
 unblock()
 ```
@@ -105,7 +105,7 @@ npm run build
 
 ## Browser compatibility
 
-The most 'advanced' javascript feature that `script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
+The most 'advanced' javascript feature that `analytics-script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
 If you absolutely need `IE 9/10` compatibility, then you have to use a [polyfill](https://github.com/megawac/MutationObserver.js):
 
