@@ -61,7 +61,7 @@ Finally, include yett with a script tag **before** other scripts you want to del
 <script src='unpkg.com/yett'></script>
 ```
 
-Then, use `window.scriptBlocker.unblock()` to resume execution of the blocked scripts.
+Then, use `window.yett.unblock()` to resume execution of the blocked scripts.
 
 ### NPM
 
