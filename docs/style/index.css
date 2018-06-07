@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Raleway');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 2em;
+    margin: 0;
+    background-color: #222;
+}
+
+main {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 8px solid blue;
+    background-color: white;
+    line-height: 2em;
+}
+@media (max-width: 600px) {
+    body {
+        font-size: 0.8em;
+    }
+}
+
+header {
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    padding: 2em;
+    background-color: blue;
+    color: white;
+    border-bottom: 5px solid blue;
+}
+
+.github-link {
+    width: 2em;
+    height: 2em;
+    display: inline-block;
+    vertical-align: middle;
+    color: white;
+    fill: orangered;
+    transition: all 0.25s;
+}
+.github-link:hover {
+    fill: white;
+}
+
+section {
+    padding: 2em;
+}
+
+.buttons-wrapper {
+    margin: 1em 0em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.buttons-wrapper > button {
+    flex: 1;
+    min-width: 200px;
+    cursor: pointer;
+    background: white;
+    color: #888;
+    font-weight: normal;
+    border: 2px solid #DDD;
+    border-radius: 10px;
+    outline: 0;
+    padding: 1em;
+    box-shadow: none;
+    text-align: center;
+    transition: all 0.25s;
+    margin: 1em;
+}
+button:hover {
+    color: #444;
+    background: #EEE;
+    border-color: transparent;
+}
+
+code {
+    font-size: 1.2em;
+}
+
+ul {
+    border-left: 4px solid blue;
+}
+
+ul li {
+    margin-bottom: 1em;
+}
+
+a {
+    color: blue;
+}
+a:visited {
+    color: black;
+}
+
+#content {
+    border: 2px dashed black;
+    padding: 1em;
+}
+
+.footnote {
+    font-size: 0.9em;
+    font-style: italic;
+}
