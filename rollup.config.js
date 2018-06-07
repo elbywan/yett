@@ -7,7 +7,7 @@ export default {
     output: {
       file: 'dist/yett.min.js',
       format: 'umd',
-      name: 'scriptBlocker',
+      name: 'yett',
       sourcemap: true
     },
     plugins: [
