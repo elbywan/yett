@@ -1,23 +1,23 @@
 {
-  "name": "script-blocker",
+  "name": "yett",
   "version": "0.1.0",
   "description": "A small library that can prevent other scripts from executing.",
-  "main": "dist/script-blocker.min.js",
+  "main": "dist/yett.min.js",
   "keywords": [
     "block",
     "blocker",
-    "script-blocker"
+    "yett"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/snipsco/script-blocker"
+    "url": "https://github.com/snipsco/yett"
   },
   "bugs": {
-    "url": "https://github.com/snipsco/script-blocker/issues"
+    "url": "https://github.com/snipsco/yett/issues"
   },
   "scripts": {
-    "build": "rollup -c && rollup -c --o docs/lib/script-blocker.min.js",
-    "watch": "rollup -c -w -o docs/lib/script-blocker.min.js",
+    "build": "rollup -c && rollup -c --o docs/lib/yett.min.js",
+    "watch": "rollup -c -w -o docs/lib/yett.min.js",
     "serve": "http-server -c-1 docs",
     "dev": "concurrently \"npm run watch\" \"npm run serve\""
   },

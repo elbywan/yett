@@ -1,5 +1,5 @@
 // Variables //
-let blacklistedPatterns = window.SCRIPT_BLOCKER_BLACKLIST
+let blacklistedPatterns = window.YETT_BLACKLIST
 const TYPE_ATTRIBUTE = 'javascript/blocked'
 
 // Disables the checks
@@ -138,19 +138,13 @@ export const unblock = function(...scriptUrls) {
             script.parentElement.removeChild(script)
         }
     }
-    // Array.from(document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)).forEach(script => {
-    //     if(unblockCheck(script)) {
-    //         script.type = 'application/javascript'
-    //         blackListedScripts.push(script)
-    //         script.parentElement.removeChild(script)
-    //     }
-    // })
 
     // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
     blackListedScripts = blackListedScripts.reduce((acc, script) => {
         if(unblockCheck(script)) {
             const scriptNode = document.createElement('script')
             scriptNode.setAttribute('src', script.src)
+            scriptNode.setAttribute('type', 'application/javascript')
             document.head.appendChild(scriptNode)
             return acc
         }
