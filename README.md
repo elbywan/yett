@@ -1,10 +1,11 @@
-# Analytics Scripts Blocker
+# Yett
 
-### 🔐 A small webpage library to control execution of (analytics) scripts
+### 🔐 A small webpage library to control the execution of (third party) scripts
 
-##### Simply drop analytics-scripts-blocker at the top of your html and it will allow you to block and delay the execution of other scripts.
+##### Simply drop yett at the top of your html and it will allow you to block and delay the execution of other scripts.
 
-_Note that analytics-scripts-blocker works for all kinds of scripts, not only analytics._
+![npm](https://img.shields.io/npm/v/yett.svg)
+![license](https://img.shields.io/npm/l/yett.svg)
 
 [![Browsers](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17)](#browser-compatibility)
 
@@ -28,20 +29,22 @@ So, at this point you have two options :
 
 Or:
 
-- Drop analytics-scripts-blocker at the top of the page, add a blacklist and let it do its magic ✨.
+- Drop yett at the top of the page, add a blacklist and let it do its magic ✨.
 
 ----------
 
 *And on a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
 
+##### *Also, [yett](https://en.wikipedia.org/wiki/Yett) has an interesting meaning.*
+
 ## Usage
 
-analytics-scripts-blocker needs a `blacklist`, which is an array of regexes to test urls against.
+Yett needs a `blacklist`, which is an array of regexes to test urls against.
 
 ```html
 <script>
-    // Add a global variable *before* analytics-script-blocker is loaded.
-    SCRIPT_BLOCKER_BLACKLIST = [
+    // Add a global variable *before* yett is loaded.
+    YETT_BLACKLIST = [
         /googletagmanager\.com/,
         /piwik\.php/,
         /cdn\.mxpnl\.com/
@@ -52,28 +55,28 @@ analytics-scripts-blocker needs a `blacklist`, which is an array of regexes to t
 ### CDN
 
 
-Finally, include script-blocker with a script tag **before** other scripts you want to delay:
+Finally, include yett with a script tag **before** other scripts you want to delay:
 
 ```html
-<script src='unpkg.com/analytics-scripts-blocker'></script>
+<script src='unpkg.com/yett'></script>
 ```
 
 Then, use `window.scriptBlocker.unblock()` to resume execution of the blocked scripts.
 
 ### NPM
 
-You can also use npm to install script-blocker:
+You can also use npm to install yett:
 
 ```bash
-npm i snipsco/analytics-scripts-blocker
+npm i yett
 ```
 
 ```js
-window.SCRIPT_BLOCKER_BLACKLIST = [
+window.YETT_BLACKLIST = [
     // ... //
 ]
 // Side effects here!
-import { unblock } from 'analytics-script-blocker'
+import { unblock } from 'yett'
 
 unblock()
 ```
@@ -93,8 +96,8 @@ Otherwise, only blacklist regexes that match any of the `scriptUrls` provided wi
 
 ```bash
 # Clone
-git clone https://github.com/snipsco/script-blocker
-cd script-blocker
+git clone https://github.com/snipsco/yett
+cd yett
 # Install
 npm i
 # Serves demo @ localhost:8080
@@ -105,7 +108,7 @@ npm run build
 
 ## Browser compatibility
 
-The most 'advanced' javascript feature that `analytics-script-blocker` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
+The most 'advanced' javascript feature that `yett` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
 If you absolutely need `IE 9/10` compatibility, then you have to use a [polyfill](https://github.com/megawac/MutationObserver.js):
 
@@ -137,7 +140,7 @@ Scripts loaded using XMLHttpRequest and Fetch are not blocked. It would be trivi
 
 ## Suggestions
 
-If you have any request or feedback for us feel free to open an [issue](https://github.com/snipsco/script-blocker/issues)!
+If you have any request or feedback for us feel free to open an [issue](https://github.com/snipsco/yett/issues)!
 
 ## License
 
