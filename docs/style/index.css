@@ -2,16 +2,12 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    padding: 2em;
+    padding: 0;
     margin: 0;
-    background-color: #222;
 }
 
 main {
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 8px solid blue;
+    min-height: 100vh;
     background-color: white;
     line-height: 2em;
 }
@@ -24,10 +20,10 @@ main {
 header {
     font-family: 'Raleway', sans-serif;
     text-align: center;
-    padding: 2em;
+    padding: 1em 0em;
     background-color: blue;
     color: white;
-    border-bottom: 5px solid blue;
+    box-shadow: 0px 2px 5px #666;
 }
 
 .github-link {
@@ -45,6 +41,9 @@ header {
 
 section {
     padding: 2em;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .buttons-wrapper {
@@ -59,21 +58,22 @@ section {
     min-width: 200px;
     cursor: pointer;
     background: white;
-    color: #888;
+    color: #666;
+    font-size: 0.8em;
     font-weight: normal;
-    border: 2px solid #DDD;
+    border: 1px solid #888;
     border-radius: 10px;
     outline: 0;
-    padding: 1em;
+    padding: 0.7em;
     box-shadow: none;
     text-align: center;
     transition: all 0.25s;
     margin: 1em;
 }
 button:hover {
-    color: #444;
-    background: #EEE;
-    border-color: transparent;
+    color: #226;
+    background: #EEF;
+    border-color: blue;
 }
 
 code {
