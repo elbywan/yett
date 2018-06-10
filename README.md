@@ -1,19 +1,21 @@
-# Yett
+<h1 align="center">
+  Yett<br>
+  <br>
+  <a href="https://www.npmjs.com/package/yett"><img alt="npm-badge" src="https://img.shields.io/npm/v/yett.svg" height="20"></a>
+  <a href="https://github.com/snipsco/yett/blob/master/LICENSE"><img alt="license-badge" src="https://img.shields.io/npm/l/yett.svg" height="20"></a>
+  <a href="https://bundlephobia.com/result?p=yett"><img alt="size-badge" src="https://img.shields.io/bundlephobia/minzip/yett.svg"></a>
+  <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
+</h1>
 
 ### 🔐 A small webpage library to control the execution of (third party) scripts
 
 ##### Simply drop yett at the top of your html and it will allow you to block and delay the execution of other scripts.
 
-![npm](https://img.shields.io/npm/v/yett.svg)
-![license](https://img.shields.io/npm/l/yett.svg)
-
-[![Browsers](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17)](#browser-compatibility)
-
 ## Why?
 
 I know, the obvious question right now is:
 
-**`Why the hell should I block scripts on my own website ❗❓`**
+[❓] **`Why on Earth should I block scripts on my own website`**
 
 We at [Snips](https://snips.ai) have encountered the following use case:
 
@@ -23,15 +25,17 @@ Plenty of third party analytics services will ask you to drop minified javascrip
 
 And start uploading data immediately.
 
-So, at this point you have two options :
+<p align="center"><br><strong>So, at this point you have two options</strong><br><br></p>
 
-- Try looking at the minified code yourself, extract the IDs contained inside and make the call toggleable yourself.
+- Try looking at the minified code yourself, extract the ids & variables contained inside and make the actual script calls toggleable yourself.
 
-Or:
+<p align="center"><strong>Or</strong><br><br></p>
 
 - Drop yett at the top of the page, add a blacklist and let it do its magic ✨.
 
 ----------
+
+We actually chose the latter in production for our [console website](https://console.snips.ai).
 
 *And on a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
 
