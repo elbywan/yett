@@ -1,6 +1,6 @@
 {
   "name": "yett",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A small library that can prevent other scripts from executing.",
   "main": "dist/yett.min.js",
   "keywords": [
@@ -23,8 +23,12 @@
   },
   "author": "Julien Elbaz",
   "contributors": [
-    { "name": "Julien Elbaz" },
-    { "name": "Jonas Ohlsson Aden" }
+    {
+      "name": "Julien Elbaz"
+    },
+    {
+      "name": "Jonas Ohlsson Aden"
+    }
   ],
   "license": "MIT",
   "devDependencies": {
