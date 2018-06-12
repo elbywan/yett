@@ -98,7 +98,7 @@ document.createElement = function(...args) {
         if(name === 'type' || name === 'src')
             scriptElt[name] = value
         else
-            HTMLScriptElement.protytope.setAttribute.call(scriptElt, name, value)
+            HTMLScriptElement.prototype.setAttribute.call(scriptElt, name, value)
     }
 
     return scriptElt
