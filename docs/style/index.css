@@ -26,19 +26,6 @@ header {
     box-shadow: 0px 2px 5px #666;
 }
 
-.github-link {
-    width: 2em;
-    height: 2em;
-    display: inline-block;
-    vertical-align: middle;
-    color: white;
-    fill: orangered;
-    transition: all 0.25s;
-}
-.github-link:hover {
-    fill: white;
-}
-
 section {
     padding: 2em;
     max-width: 1000px;
@@ -60,9 +47,9 @@ section {
     background: white;
     color: #666;
     font-size: 0.8em;
-    font-weight: normal;
-    border: 1px solid #888;
-    border-radius: 10px;
+    font-weight: 500;
+    border: 2px solid #888;
+    border-radius: 2em;
     outline: 0;
     padding: 0.7em;
     box-shadow: none;
