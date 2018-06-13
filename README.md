@@ -7,29 +7,24 @@
   <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
 </h1>
 
-### 🔐 A small webpage library to control the execution of (third party) scripts
+### 🔐 A small webpage library to control the execution of (third party) scripts like analytics
 
-##### Simply drop yett at the top of your html and it will allow you to block and delay the execution of other (for example - analytics) scripts.
+##### Simply drop yett at the top of your html and it will allow you to block and delay the execution of other scripts.
 
-## Why?
+## Background
+
+[❓] **`So, why on Earth would I want to block scripts on my own website?`**
+
+We use `yett` in order to provide [GDPR compliant consent-first-analytics](https://medium.com/snips-ai/gdpr-compliant-website-analytics-putting-users-in-control-684b17a1463f), via an UI like below.
 
 <img src="https://cdn.rawgit.com/snipsco/yett/ead29c36/privacy-bar.png" alt="bar"></img>
+_Analytics scripts are blocked until users Accepts, in production on [https://console.snips.ai](https://console.snips.ai)_
 
-**Check out this [blog post](https://medium.com/snips-ai/gdpr-compliant-website-analytics-putting-users-in-control-684b17a1463f) that explains our motives. For the short version see below.**
+Blocking execution of analytics script (until consent is given) can be done manually, but the problem is that analytics providers often provide minified code embeds that you have to include in your html as they are. If you want to exercise control over their execution, then you have to tamper with this minified JS yourself, which is complex and does not scale well if you load server 3rd party scripts.
 
------
-
-[❓] **`So, why on Earth should I block scripts on my own website?`**
-
-Our use case at [Snips](https://snips.ai) is to prevent collecting analytics data from users ahead of time without asking for their consent.
-
-The problem is that these third party scripts are often minified pieces of code that you have to include as is. If you want to exercise control over their execution, then you would have to tamper with this minified JS yourself.
-
-With `yett`, you just need to drop the script and define a blacklist of domains. It will do the magic ✨.
+Thus we invented `yett`. Just drop in the script and define a domain blacklist - `yett` will take care of the rest ✨.
 
 ------
-
-`Yett` is used it in production for our [console website](https://console.snips.ai).
 
 *On a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
 
