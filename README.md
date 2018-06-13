@@ -9,35 +9,29 @@
 
 ### 🔐 A small webpage library to control the execution of (third party) scripts
 
-##### Simply drop yett at the top of your html and it will allow you to block and delay the execution of other scripts.
+##### Simply drop yett at the top of your html and it will allow you to block and delay the execution of other (for example - analytics) scripts.
 
 ## Why?
 
-I know, the obvious question right now is:
+<img src="https://cdn.rawgit.com/snipsco/yett/ead29c36/privacy-bar.png" alt="bar"></img>
 
-[❓] **`Why on Earth should I block scripts on my own website`**
+**Check out this [blog post](https://medium.com/snips-ai/gdpr-compliant-website-analytics-putting-users-in-control-684b17a1463f) that explains our motives. For the short version see below.**
 
-We at [Snips](https://snips.ai) have encountered the following use case:
+-----
 
-Suppose that you want to use analytics on your website. And suppose that for you privacy really matters, and that you don't want to collect analytics from your website users right away, but to actually ask them for their consent first.
+[❓] **`So, why on Earth should I block scripts on my own website?`**
 
-Plenty of third party analytics services will ask you to drop minified javascript code inside your html, which will be super convenient but you will have absolutely no control when this code will be executed. And it **will** be executed as soon as the page loads.
+Our use case at [Snips](https://snips.ai) is to prevent collecting analytics data from users ahead of time without asking for their consent.
 
-And start uploading data immediately.
+The problem is that these third party scripts are often minified pieces of code that you have to include as is. If you want to exercise control over their execution, then you would have to tamper with this minified JS yourself.
 
-<p align="center"><br><strong>So, at this point you have two options</strong><br><br></p>
+With `yett`, you just need to drop the script and define a blacklist of domains. It will do the magic ✨.
 
-- Try looking at the minified code yourself, extract the ids & variables contained inside and make the actual script calls toggleable yourself.
+------
 
-<p align="center"><strong>Or</strong><br><br></p>
+`Yett` is used it in production for our [console website](https://console.snips.ai).
 
-- Drop yett at the top of the page, add a blacklist and let it do its magic ✨.
-
-----------
-
-We actually chose the latter in production for our [console website](https://console.snips.ai).
-
-*And on a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
+*On a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
 
 ##### *Also, [yett](https://en.wikipedia.org/wiki/Yett) has an interesting meaning.*
 
@@ -49,12 +43,14 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
 <script>
     // Add a global variable *before* yett is loaded.
     YETT_BLACKLIST = [
-        /googletagmanager\.com/,
+        /www\\.google-analytics\\.com/,
         /piwik\.php/,
         /cdn\.mxpnl\.com/
     ]
 </script>
 ```
+
+**It is strongly recommended to [add a type attribute](https://github.com/snipsco/yett#add-a-type-attribute-manually)  to any `<script>` tag you want to block. It will prevent them from loading in major browsers and execution on `Edge`.**
 
 ### CDN
 
@@ -122,12 +118,11 @@ If you absolutely need `IE 9/10` compatibility, then you have to use a [polyfill
 
 ### Caveats
 
-#### Add a type property to the scripts tags
+#### Add a type attribute manually
 
-**If you want to target `Microsoft Edge` users, then you should read this!**
+> Needed for targetting `Microsoft Edge`! Adding this property also prevents the script from loading on `Chrome`, `Safari` and `Firefox`.
 
-
-In order to support script tag blocking with `Edge`, you will have to add an attribute yourself on script tags that need to be blocked.
+In order to prevent the execution of the script for `Edge` users, you will have to add a type attribute yourself.
 
 ```html
 <!-- Add type="javascript/blocked" yourself, otherwise it will "only" work on Chrome/Firefox/Safari/IE -->
@@ -145,6 +140,8 @@ Scripts loaded using XMLHttpRequest and Fetch are not blocked. It would be trivi
 ## Suggestions
 
 If you have any request or feedback for us feel free to open an [issue](https://github.com/snipsco/yett/issues)!
+
+So far we’re using this library for analytics, but it could also be used to block advertising until consent, and other things we haven’t thought about yet. We’re excited to see what use cases the community comes up with!
 
 ## License
 
