@@ -17,8 +17,12 @@
 
 We use `yett` in order to provide [GDPR compliant consent-first-analytics](https://medium.com/snips-ai/gdpr-compliant-website-analytics-putting-users-in-control-684b17a1463f), via an UI like below.
 
+<br>
+
 <img src="https://cdn.rawgit.com/snipsco/yett/ead29c36/privacy-bar.png" alt="bar"></img>
-_Analytics scripts are blocked until users Accepts, in production on [https://console.snips.ai](https://console.snips.ai)_
+<h6 align="center"><i>Analytics scripts are blocked until users Accepts, in production on <a href="https://console.snips.ai">https://console.snips.ai</a></i></h6>
+
+<br>
 
 Blocking execution of analytics script (until consent is given) can be done manually, but the problem is that analytics providers often provide minified code embeds that you have to include in your html as they are. If you want to exercise control over their execution, then you have to tamper with this minified JS yourself, which is complex and does not scale well if you load server 3rd party scripts.
 
@@ -26,11 +30,47 @@ Thus we invented `yett`. Just drop in the script and define a domain blacklist -
 
 ------
 
-*On a side note, it is technically quite amazing to know that a few lines of js is all you need to control execution of other scripts, even those included with a script tag.* 😉
+And on a side note, it is technically quite amazing to know that **[a few lines of js](https://medium.com/snips-ai/how-to-block-third-party-scripts-with-a-few-lines-of-javascript-f0b08b9c4c0)** is all you need to control execution of other scripts, even those included with a script tag. 😉
 
 ##### *Also, [yett](https://en.wikipedia.org/wiki/Yett) has an interesting meaning.*
 
 ## Usage
+
+#### Small example
+
+```html
+<html>
+  <head>
+    <!-- Head items… -->
+
+    <!-- 1) Add a blacklist -->
+    <script>
+      window.YETT_BLACKLIST = [
+        /my-blacklisted-domain/,
+      ]
+    </script>
+    <!-- 2) Include Yett -->
+    <script src="https://unpkg.com/yett@0.1.2/dist/yett.min.js"></script>
+    <!-- 3) Profit! -->
+    <!-- This script is blocked -->
+    <script src="https://my-blacklisted-domain.com/file.js"></script>
+    <script>
+      // This one too
+      (function() {
+        var script = document.createElement('script')
+        script.setAttribute('src', 'https://my-blacklisted-domain.com/some-file.js')
+        script.setAttribute('type', 'application/javascript')
+        document.head.appendChild(script)
+      })()
+    </script>
+  </head>
+</html>
+<body>
+  <button onclick="window.yett.unblock()">Unblock</button>
+</body>
+```
+
+## Add a blacklist
 
 Yett needs a `blacklist`, which is an array of regexes to test urls against.
 
@@ -45,7 +85,7 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
 </script>
 ```
 
-**It is strongly recommended to [add a type attribute](https://github.com/snipsco/yett#add-a-type-attribute-manually)  to any `<script>` tag you want to block. It will prevent them from loading in major browsers and execution on `Edge`.**
+**⚠️ It is strongly recommended that you [add type attributes](https://github.com/snipsco/yett#add-a-type-attribute-manually) to `<script>` tags having src attributes that you want to block. It is necessary for script execution blocking to work in the Edge browser, and has the benefit of also preventing the scripts from loading in all other major browsers.**
 
 ### CDN
 
@@ -117,7 +157,7 @@ If you absolutely need `IE 9/10` compatibility, then you have to use a [polyfill
 
 > Needed for targetting `Microsoft Edge`! Adding this property also prevents the script from loading on `Chrome`, `Safari` and `Firefox`.
 
-In order to prevent the execution of the script for `Edge` users, you will have to add a type attribute yourself.
+In order to prevent the execution of the script for `Edge` users, you will have to add `type="javascript/blocked"` manually as shown in the example below.
 
 ```html
 <!-- Add type="javascript/blocked" yourself, otherwise it will "only" work on Chrome/Firefox/Safari/IE -->
