@@ -1,12 +1,15 @@
 {
   "name": "yett",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A small library that can prevent other scripts from executing.",
   "main": "dist/yett.min.js",
   "keywords": [
     "block",
     "blocker",
     "yett"
+  ],
+  "files": [
+    "dist"
   ],
   "repository": {
     "type": "git",
