@@ -26,6 +26,8 @@ We use `yett` in order to provide [GDPR compliant consent-first-analytics](https
 
 Blocking execution of analytics script (until consent is given) can be done manually, but the problem is that analytics providers often provide minified code embeds that you have to include in your html as they are. If you want to exercise control over their execution, then you have to tamper with this minified JS yourself, which is complex and does not scale well if you load several 3rd party scripts.
 
+Another thing to consider is that these scripts first setup a local buffer that record user actions locally, and then upload the data after a remote script is loaded asynchronously. Meaning that if the whole thing is simply wrapped inside a callback *(as some other libraries do)* then every action performed by the user on the web page before the callback gets executed won't get recorded and will never appear in your analytics dashboard.
+
 Thus we invented `yett`. Just drop in the script and define a domain blacklist - `yett` will take care of the rest ✨.
 
 ------
@@ -93,7 +95,7 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
 ### CDN
 
 
-Finally, include yett with a script tag **before** other scripts you want to delay:
+Finally, include `yett with a script tag **before** other scripts you want to delay:
 
 ```html
 <script src='unpkg.com/yett'></script>
@@ -163,12 +165,12 @@ If you need `IE 9/10` compatibility, you will have to use a [polyfill](https://g
 
 #### Add a type attribute manually
 
-> Needed for targetting `Microsoft Edge`! Adding this property also prevents the script from loading on `Chrome`, `Safari` and `Firefox`.
+> Needed for targetting `Microsoft Edge & Internet Explorer`! Adding this property also prevents the script from loading on `Chrome`, `Safari` and `Firefox`.
 
-In order to prevent the execution of the script for `Edge` users, you will have to add `type="javascript/blocked"` manually as shown in the example below.
+In order to prevent the execution of the script for `Edge` and `IE` users, you will have to add `type="javascript/blocked"` manually as shown in the example below.
 
 ```html
-<!-- Add type="javascript/blocked" yourself, otherwise it will "only" work on Chrome/Firefox/Safari/IE -->
+<!-- Add type="javascript/blocked" yourself, otherwise it will "only" work on Chrome/Firefox/Safari -->
 <script src="..." type="javascript/blocked"></script>
 ```
 
