@@ -24,7 +24,7 @@ We use `yett` in order to provide [GDPR compliant consent-first-analytics](https
 
 <br>
 
-Blocking execution of analytics script (until consent is given) can be done manually, but the problem is that analytics providers often provide minified code embeds that you have to include in your html as they are. If you want to exercise control over their execution, then you have to tamper with this minified JS yourself, which is complex and does not scale well if you load server 3rd party scripts.
+Blocking execution of analytics script (until consent is given) can be done manually, but the problem is that analytics providers often provide minified code embeds that you have to include in your html as they are. If you want to exercise control over their execution, then you have to tamper with this minified JS yourself, which is complex and does not scale well if you load several 3rd party scripts.
 
 Thus we invented `yett`. Just drop in the script and define a domain blacklist - `yett` will take care of the rest ✨.
 
