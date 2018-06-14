@@ -17,7 +17,8 @@ const needsToBeBlacklisted = (src, type) => (
 
 const observer = new MutationObserver(mutations => {
     mutations.forEach(({ addedNodes }) => {
-        addedNodes.forEach(node => {
+        for(let i = 0; i < addedNodes.length; i++) {
+            const node = addedNodes[i]
             // For each added script tag
             if(node.nodeType === 1 && node.tagName === 'SCRIPT') {
                 const src = node.src || ''
@@ -43,7 +44,7 @@ const observer = new MutationObserver(mutations => {
                     node.parentElement.removeChild(node)
                 }
             }
-        })
+        }
     })
 })
 
