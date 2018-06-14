@@ -36,6 +36,8 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 
 ## Usage
 
+#### [:tv: Demo](https://snipsco.github.io/yett/)
+
 #### Small example
 
 ```html
@@ -71,6 +73,8 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 </html>
 ```
 
+**⚠️ It is strongly recommended that you [add type attributes](https://github.com/snipsco/yett#add-a-type-attribute-manually) to `<script>` tags having src attributes that you want to block. It is necessary for script execution blocking to work in the Edge browser, and has the benefit of also preventing the scripts from loading in all other major browsers.**
+
 ## Add a blacklist
 
 Yett needs a `blacklist`, which is an array of regexes to test urls against.
@@ -85,8 +89,6 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
     ]
 </script>
 ```
-
-**⚠️ It is strongly recommended that you [add type attributes](https://github.com/snipsco/yett#add-a-type-attribute-manually) to `<script>` tags having src attributes that you want to block. It is necessary for script execution blocking to work in the Edge browser, and has the benefit of also preventing the scripts from loading in all other major browsers.**
 
 ### CDN
 
