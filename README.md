@@ -4,7 +4,7 @@
   <a href="https://www.npmjs.com/package/yett"><img alt="npm-badge" src="https://img.shields.io/npm/v/yett.svg" height="20"></a>
   <a href="https://github.com/snipsco/yett/blob/master/LICENSE"><img alt="license-badge" src="https://img.shields.io/npm/l/yett.svg" height="20"></a>
   <a href="https://bundlephobia.com/result?p=yett"><img alt="size-badge" src="https://img.shields.io/bundlephobia/minzip/yett.svg"></a>
-  <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
+  <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
 </h1>
 
 ### 🔐 A small webpage library to control the execution of (third party) scripts like analytics
@@ -145,6 +145,11 @@ npm run build
 ```
 
 ## Browser compatibility
+
+|                        |                    `<script>`                   |     `<script type="javascript/blocked">`    |      `document.createElement('script')`     |
+|------------------------|:-----------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|
+| **Prevents loading**   | ![](https://badges.herokuapp.com/browsers?firefox=-60&googlechrome=-66&safari=11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) |
+| **Prevents execution** | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=11&microsoftedge=17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=11&microsoftedge=17) |
 
 The most 'advanced' javascript feature that `yett` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
