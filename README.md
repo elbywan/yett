@@ -148,7 +148,7 @@ npm run build
 
 The most 'advanced' javascript feature that `yett` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
 
-If you absolutely need `IE 9/10` compatibility, then you have to use a [polyfill](https://github.com/megawac/MutationObserver.js):
+If you need `IE 9/10` compatibility, you will have to use a [polyfill](https://github.com/megawac/MutationObserver.js):
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/mutationobserver-shim/dist/mutationobserver.min.js"></script>
