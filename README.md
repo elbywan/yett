@@ -39,9 +39,10 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 #### Small example
 
 ```html
+<!DOCTYPE html>
 <html>
   <head>
-    <!-- Head items… -->
+    <!-- Regular head items here… -->
 
     <!-- 1) Add a blacklist -->
     <script>
@@ -50,7 +51,7 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
       ]
     </script>
     <!-- 2) Include Yett -->
-    <script src="https://unpkg.com/yett@0.1.2/dist/yett.min.js"></script>
+    <script src="https://unpkg.com/yett"></script>
     <!-- 3) Profit! -->
     <!-- This script is blocked -->
     <script src="https://my-blacklisted-domain.com/file.js"></script>
@@ -64,10 +65,10 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
       })()
     </script>
   </head>
+  <body>
+    <button onclick="window.yett.unblock()">Unblock</button>
+  </body>
 </html>
-<body>
-  <button onclick="window.yett.unblock()">Unblock</button>
-</body>
 ```
 
 ## Add a blacklist
