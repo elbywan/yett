@@ -95,7 +95,7 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
 ### CDN
 
 
-Finally, include `yett with a script tag **before** other scripts you want to delay:
+Finally, include `yett` with a script tag **before** other scripts you want to delay:
 
 ```html
 <script src='unpkg.com/yett'></script>
