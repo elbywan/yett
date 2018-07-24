@@ -150,7 +150,7 @@ npm run build
 
 |                        |                    `<script>`                   |     `<script type="javascript/blocked">`    |      `document.createElement('script')`     |
 |------------------------|:-----------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|
-| **Prevents loading**   | ![](https://badges.herokuapp.com/browsers?firefox=-60&googlechrome=-66&safari=11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) |
+| **Prevents loading**   | ![](https://badges.herokuapp.com/browsers?firefox=-60&googlechrome=-66&safari=-11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=-11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) |
 | **Prevents execution** | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=-11&microsoftedge=-17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=11&microsoftedge=17) | ![](https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=11&microsoftedge=17) |
 
 The most 'advanced' javascript feature that `yett` uses is [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver), which is compatible with all major browsers as well as `IE11`.
@@ -165,12 +165,12 @@ If you need `IE 9/10` compatibility, you will have to use a [polyfill](https://g
 
 #### Add a type attribute manually
 
-> Needed for targetting `Microsoft Edge & Internet Explorer`! Adding this property also prevents the script from loading on `Chrome`, `Safari` and `Firefox`.
+> Needed for targetting `Microsoft Edge & Internet Explorer`! Adding this property also prevents the script from loading on `Chrome` and `Firefox`.
 
 In order to prevent the execution of the script for `Edge` and `IE` users, you will have to add `type="javascript/blocked"` manually as shown in the example below.
 
 ```html
-<!-- Add type="javascript/blocked" yourself, otherwise it will "only" work on Chrome/Firefox/Safari -->
+<!-- Add type="javascript/blocked" yourself, otherwise it will "only" block execution on Chrome/Firefox/Safari -->
 <script src="..." type="javascript/blocked"></script>
 ```
 
