@@ -19,10 +19,11 @@
     "url": "https://github.com/snipsco/yett/issues"
   },
   "scripts": {
-    "build": "rollup -c && rollup -c --o docs/lib/yett.min.js",
+    "build": "npm run lint && rollup -c && rollup -c --o docs/lib/yett.min.js",
     "watch": "rollup -c -w -o docs/lib/yett.min.js",
     "serve": "http-server -c-1 docs",
-    "dev": "concurrently \"npm run watch\" \"npm run serve\""
+    "dev": "concurrently \"npm run watch\" \"npm run serve\"",
+    "lint": "eslint src"
   },
   "author": "Julien Elbaz",
   "contributors": [
@@ -36,9 +37,11 @@
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.7.0",
     "concurrently": "^3.5.1",
+    "eslint": "^5.6.0",
     "http-server": "^0.11.1",
     "rollup": "^0.59.4",
     "rollup-plugin-babel": "^3.0.4",
