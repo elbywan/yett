@@ -53,6 +53,10 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
       window.YETT_BLACKLIST = [
         /my-blacklisted-domain/,
       ]
+      // Or a whitelist
+      window.YETT_WHITELIST = [
+        /my-whitelisted-domain/,
+      ]
     </script>
     <!-- 2) Include Yett -->
     <script src="https://unpkg.com/yett"></script>
@@ -89,6 +93,10 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
         /piwik\.php/,
         /cdn\.mxpnl\.com/
     ]
+    // OR
+    YETT_WHITELIST = [
+        /my-whitelisted-domain/
+    ]
 </script>
 ```
 
@@ -115,7 +123,11 @@ npm i yett
 window.YETT_BLACKLIST = [
     // ... //
 ]
-// Side effects here!
+// OR
+window.YETT_WHITELIST = [
+    // ... //
+]
+// Side effects here! Do not import more than once!
 import { unblock } from 'yett'
 
 unblock()
@@ -129,8 +141,8 @@ unblock(...scriptUrls: String[])
 
 > Unblocks blacklisted scripts.
 
-If you don't specify a `scriptUrls` argument, all blocked script will be executed.
-Otherwise, only blacklist regexes that match any of the `scriptUrls` provided will be removed, and only the scripts that are not considered as blacklisted anymore will execute.
+If you don't specify a `scriptUrls` argument, all the scripts that were previously blocked will be executed.
+Otherwise, the `scriptUrls` provided will be either removed from the blacklist (or added to the whitelist) and executed.
 
 ### Build locally
 

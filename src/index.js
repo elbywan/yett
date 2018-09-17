@@ -1,16 +1,18 @@
 // Variables //
 let blacklistedPatterns = window.YETT_BLACKLIST
+let whitelistedPatterns = window.YETT_WHITELIST
 const TYPE_ATTRIBUTE = 'javascript/blocked'
 
-// Disables the checks
-let disableBlocker = false
 // Backup of the blacklisted script nodes
 let blackListedScripts = []
 
-const needsToBeBlacklisted = (src, type) => (
-    !disableBlocker &&
+const isOnBlacklist = (src, type) => (
+    src &&
     (!type || type !== TYPE_ATTRIBUTE) &&
-    blacklistedPatterns.some(pattern => pattern.test(src))
+    (
+        (!blacklistedPatterns || blacklistedPatterns.some(pattern => pattern.test(src))) &&
+        (!whitelistedPatterns || whitelistedPatterns.every(pattern => !pattern.test(src)))
+    )
 )
 
 /* 1st part - setup a mutation observer to track DOM insertion */
@@ -21,10 +23,10 @@ const observer = new MutationObserver(mutations => {
             const node = addedNodes[i]
             // For each added script tag
             if(node.nodeType === 1 && node.tagName === 'SCRIPT') {
-                const src = node.src || ''
+                const src = node.src
                 const type = node.type
-                // If the src is inside the blacklist
-                if(needsToBeBlacklisted(src, type)) {
+                // If the src is inside the blacklist and is not inside the whitelist
+                if(isOnBlacklist(src, type)) {
                     // We backup a copy of the script node
                     blackListedScripts.push(node.cloneNode())
 
@@ -76,7 +78,7 @@ document.createElement = function(...args) {
                 return originalDescriptors.src.get.call(this)
             },
             set(value) {
-                if(needsToBeBlacklisted(value, scriptElt.type)) {
+                if(isOnBlacklist(value, scriptElt.type)) {
                     scriptElt.type = TYPE_ATTRIBUTE
                 }
                 return originalDescriptors.src.set.call(this, value)
@@ -86,7 +88,7 @@ document.createElement = function(...args) {
             set(value) {
                 return originalDescriptors.type.set.call(
                     this,
-                    needsToBeBlacklisted(scriptElt.src, scriptElt.type) ?
+                    isOnBlacklist(scriptElt.src, scriptElt.type) ?
                         TYPE_ATTRIBUTE :
                         value
                 )
@@ -105,29 +107,43 @@ document.createElement = function(...args) {
     return scriptElt
 }
 
-/* Expose a function that resumes the blacklisted scripts execution. */
-
 const unblockCheck = function(script) {
     const src = script.getAttribute('src')
     return (
-        disableBlocker ||
-        blacklistedPatterns.every(entry => !entry.test(src))
+        (blacklistedPatterns && blacklistedPatterns.every(entry => !entry.test(src))) ||
+        (whitelistedPatterns && whitelistedPatterns.some(entry => entry.test(src)))
     )
 }
 
+// Unblocks all (or a selection of) blacklisted scripts.
 export const unblock = function(...scriptUrls) {
-    if(disableBlocker)
-        return
 
-    observer.disconnect()
-
-    if(!scriptUrls || scriptUrls.length < 1) {
-        disableBlocker = true
+    if(scriptUrls.length < 1) {
+        blacklistedPatterns = []
+        whitelistedPatterns = []
     } else {
-        blacklistedPatterns = blacklistedPatterns.filter(pattern =>
-            scriptUrls.every(url => !pattern.test(url))
-        )
+        if(blacklistedPatterns) {
+            blacklistedPatterns = blacklistedPatterns.filter(pattern =>
+                scriptUrls.every(url => !pattern.test(url))
+            )
+        }
+        if(whitelistedPatterns) {
+            whitelistedPatterns = [
+                ...whitelistedPatterns,
+                ...scriptUrls
+                    .map(url => {
+                        const escapedUrl = url.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+                        const permissiveRegexp = '.*' + escapedUrl + '.*'
+                        if(!whitelistedPatterns.find(p => p.toString() === permissiveRegexp.toString())) {
+                            return new RegExp(permissiveRegexp)
+                        }
+                        return null
+                    })
+                    .filter(Boolean)
+            ]
+        }
     }
+
 
     // Parse existing script tags with a marked type
     const tags = document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)
@@ -151,4 +167,9 @@ export const unblock = function(...scriptUrls) {
         }
         return [...acc, script]
     }, [])
+
+    // Disconnect the observer if the blacklist is empty for performance reasons
+    if(blacklistedPatterns && blacklistedPatterns.length < 1) {
+        observer.disconnect()
+    }
 }
