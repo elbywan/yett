@@ -142,7 +142,7 @@ unblock(...scriptUrls: String[])
 > Unblocks blacklisted scripts.
 
 If you don't specify a `scriptUrls` argument, all the scripts that were previously blocked will be executed.
-Otherwise, the `scriptUrls` provided will be either removed from the blacklist (or added to the whitelist) and executed.
+Otherwise, the `scriptUrls` provided will be either removed from the blacklist or added to the whitelist and executed.
 
 ### Build locally
 
