@@ -54,13 +54,15 @@ export const unblock = function(...scriptUrls) {
     }
 
     // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
+    let indexOffset = 0;
     [...backupScripts.blacklisted].forEach((script, index) => {
         if(willBeUnblocked(script)) {
             const scriptNode = document.createElement('script')
             scriptNode.setAttribute('src', script.src)
             scriptNode.setAttribute('type', 'application/javascript')
             document.head.appendChild(scriptNode)
-            backupScripts.blacklisted.splice(index, 1)
+            backupScripts.blacklisted.splice(index - indexOffset, 1)
+            indexOffset++
         }
     })
 
