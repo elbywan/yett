@@ -12,6 +12,8 @@ import {
     observer
 } from './observer'
 
+const URL_REPLACER_REGEXP = new RegExp('[|\\{}()[\\]^$+*?.]', 'g')
+
 // Unblocks all (or a selection of) blacklisted scripts.
 export const unblock = function(...scriptUrls) {
 
@@ -29,7 +31,7 @@ export const unblock = function(...scriptUrls) {
                 ...patterns.whitelist,
                 ...scriptUrls
                     .map(url => {
-                        const escapedUrl = url.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+                        const escapedUrl = url.replace(URL_REPLACER_REGEXP, '\\$&')
                         const permissiveRegexp = '.*' + escapedUrl + '.*'
                         if(!patterns.whitelist.find(p => p.toString() === permissiveRegexp.toString())) {
                             return new RegExp(permissiveRegexp)
