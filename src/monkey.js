@@ -1,4 +1,4 @@
-import { TYPE_ATTRIBUTE } from './variables'
+import { TYPE_ATTRIBUTE,TYPE_SANDBOX } from './variables'
 import { isOnBlacklist } from './checks'
 
 const originalDescriptors = {
@@ -10,6 +10,47 @@ const createElementBackup = document.createElement
 // Monkey patch the createElement method to prevent dynamic scripts from executing
 document.createElement = function(...args) {
     // If this is not a script tag, bypass
+    console.log(args[0].toLowerCase());
+
+    if(args[0].toLowerCase() === 'iframe'){
+        const scriptElt = createElementBackup.bind(document)(...args)
+
+        // Use the prototype descriptors
+        Object.defineProperties(scriptElt, {
+            'src': {
+                get() {
+                    return originalDescriptors.src.get.call(this)
+                },
+                set(value) {
+                    if(isOnBlacklist(value, scriptElt.type)) {
+                        scriptElt.sandbox = TYPE_SANDBOX
+                    }
+                    return originalDescriptors.src.set.call(this, value)
+                }
+            },
+            'sandbox': {
+                set(value) {
+                    return originalDescriptors.type.set.call(
+                        this,
+                        isOnBlacklist(scriptElt.src) ?
+                            TYPE_SANDBOX :
+                            value
+                    )
+                }
+            }
+        })
+    
+        // Monkey patch the setAttribute function so that the setter is called instead
+        scriptElt.setAttribute = function(name, value) {
+            if(name === 'sandbox' || name === 'src')
+                scriptElt[name] = value
+            else
+                HTMLScriptElement.prototype.setAttribute.call(scriptElt, name, value)
+        }
+    
+        return scriptElt
+    }
+
     if(args[0].toLowerCase() !== 'script')
         return createElementBackup.bind(document)(...args)
 

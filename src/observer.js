@@ -1,4 +1,4 @@
-import { backupScripts, TYPE_ATTRIBUTE } from './variables'
+import { backupScripts, backupIframes, TYPE_ATTRIBUTE, TYPE_SANDBOX } from './variables'
 import { isOnBlacklist } from './checks'
 
 // Setup a mutation observer to track DOM insertion
@@ -31,6 +31,19 @@ export const observer = new MutationObserver(mutations => {
                     node.parentElement.removeChild(node)
                 }
             }
+            if(node.nodeType === 1 && node.tagName === 'IFRAME') {
+                const src = node.src
+                // const type = node.type
+                // If the src is inside the blacklist and is not inside the whitelist
+                if(isOnBlacklist(src)) {
+                    // We backup a copy of the script node
+                    backupIframes.blacklisted.push(node.cloneNode())
+
+                    // Remove the node from the DOM
+                    // node.parentElement.removeChild(node)
+                    node.sandbox = TYPE_SANDBOX
+                }
+            }            
         }
     })
 })
