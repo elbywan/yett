@@ -11,7 +11,10 @@ const createElementBackup = document.createElement
 document.createElement = function(...args) {
     // If this is not a script tag, bypass
 
-    if(args[0].toLowerCase() === 'iframe'){
+    if(args[0].toLowerCase() === 'iframe' && TYPE_SANDBOX !== false){
+        if (TYPE_SANDBOX === 'remove'){
+            return null;
+        }
         const scriptElt = createElementBackup.bind(document)(...args)
 
         // Use the prototype descriptors

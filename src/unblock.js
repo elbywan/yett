@@ -1,7 +1,8 @@
 import {
     patterns,
     backupScripts,
-    TYPE_ATTRIBUTE
+    TYPE_ATTRIBUTE,
+    patternsObj
 } from './variables'
 
 import {
@@ -14,6 +15,21 @@ import {
 
 const URL_REPLACER_REGEXP = new RegExp('[|\\{}()[\\]^$+*?.]', 'g')
 
+export const unblockId = function(...scriptIds) {
+    scriptIds.forEach((e) => {
+        if (patternsObj.blacklist instanceof Object){
+            try{
+                unblock(patternsObj.blacklist[e]);
+            }catch(_){  /* do nothing*/     }
+        }
+        if (patternsObj.whitelist instanceof Object){
+            try{
+                unblock(patternsObj.whitelist[e]);
+            }catch(_){ /* do nothing*/  }
+        }        
+    });
+}
+
 // Unblocks all (or a selection of) blacklisted scripts.
 export const unblock = function(...scriptUrls) {
 
@@ -21,12 +37,12 @@ export const unblock = function(...scriptUrls) {
         patterns.blacklist = []
         patterns.whitelist = []
     } else {
-        if(patterns.blacklist) {
+        if(patterns.blacklist instanceof Array) {
             patterns.blacklist = patterns.blacklist.filter(pattern =>
                 scriptUrls.every(url => !pattern.test(url))
             )
         }
-        if(patterns.whitelist) {
+        if(patterns.whitelist instanceof Array) {
             patterns.whitelist = [
                 ...patterns.whitelist,
                 ...scriptUrls
@@ -42,7 +58,6 @@ export const unblock = function(...scriptUrls) {
             ]
         }
     }
-
 
     // Parse existing script tags with a marked type
     const tags = document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)

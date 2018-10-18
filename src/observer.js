@@ -31,17 +31,19 @@ export const observer = new MutationObserver(mutations => {
                     node.parentElement.removeChild(node)
                 }
             }
-            if(node.nodeType === 1 && node.tagName === 'IFRAME') {
+            if(node.nodeType === 1 && node.tagName === 'IFRAME' && TYPE_SANDBOX !== false) {
                 const src = node.src
-                // const type = node.type
                 // If the src is inside the blacklist and is not inside the whitelist
                 if(isOnBlacklist(src)) {
                     // We backup a copy of the script node
                     backupIframes.blacklisted.push(node.cloneNode())
 
-                    // Remove the node from the DOM
-                    // node.parentElement.removeChild(node)
-                    node.sandbox = TYPE_SANDBOX
+                    if (TYPE_SANDBOX === 'remove'){
+                        // Remove the node from the DOM
+                        node.src = ""
+                    }else{
+                        node.sandbox = TYPE_SANDBOX
+                    }
                 }
             }            
         }
