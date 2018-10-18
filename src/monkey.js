@@ -10,7 +10,6 @@ const createElementBackup = document.createElement
 // Monkey patch the createElement method to prevent dynamic scripts from executing
 document.createElement = function(...args) {
     // If this is not a script tag, bypass
-    console.log(args[0].toLowerCase());
 
     if(args[0].toLowerCase() === 'iframe'){
         const scriptElt = createElementBackup.bind(document)(...args)
