@@ -6,7 +6,8 @@ import {
 } from './variables'
 
 import {
-    willBeUnblocked
+    willBeUnblocked,
+    testPattern
 } from './checks'
 
 import {
@@ -39,7 +40,7 @@ export const unblock = function(...scriptUrls) {
     } else {
         if(patterns.blacklist instanceof Array) {
             patterns.blacklist = patterns.blacklist.filter(pattern =>
-                scriptUrls.every(url => !pattern.test(url))
+                scriptUrls.every(url => !testPattern(pattern,url))
             )
         }
         if(patterns.whitelist instanceof Array) {
@@ -65,23 +66,24 @@ export const unblock = function(...scriptUrls) {
         const script = tags[i]
         if(willBeUnblocked(script)) {
             script.type = 'application/javascript'
-            backupScripts.blacklisted.push(script)
+            backupScripts.blacklisted.push([script,script.parentElement])
             script.parentElement.removeChild(script)
         }
     }
 
     // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
     let indexOffset = 0;
-    [...backupScripts.blacklisted].forEach((script, index) => {
+    [...backupScripts.blacklisted].forEach((arr, index) => {
+        let script = arr[0]
+        let parent = arr[1]
         if(willBeUnblocked(script)) {
-            const scriptNode = document.createElement('script')
-            scriptNode.setAttribute('src', script.src)
-            scriptNode.setAttribute('type', 'application/javascript')
-            document.head.appendChild(scriptNode)
+            if (script.type && script.type === TYPE_ATTRIBUTE)
+                script.type = 'application/javascript'
+            parent.appendChild(script)
             backupScripts.blacklisted.splice(index - indexOffset, 1)
             indexOffset++
         }
-    })
+    })    
 
     // Disconnect the observer if the blacklist is empty for performance reasons
     if(patterns.blacklist && patterns.blacklist.length < 1) {
