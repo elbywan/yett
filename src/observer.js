@@ -9,14 +9,10 @@ export const observer = new MutationObserver(mutations => {
             // For each added script tag
             if(node.nodeType === 1 ){
                 const blockingType = isOnBlacklist(node)                 
-                if (node.tagName === 'SCRIPT') {
-                    const src = node.src
-                    const type = node.type
+                if (node.tagName === 'SCRIPT' && blockingType) {
                     // If the src is inside the blacklist and is not inside the whitelist
-
-                    if(blockingType) {
                         // We backup a copy of the script node
-                        backupScripts.blacklisted.push([node.cloneNode(),node.parentElement])
+                        backupScripts.blacklisted.push([node.cloneNode(true),node.parentElement])
                         blockNodeNoBackup(node,blockingType)
                         // Blocks inline script execution in Safari & Chrome
                         node.type = TYPE_ATTRIBUTE
@@ -31,7 +27,6 @@ export const observer = new MutationObserver(mutations => {
                         node.addEventListener('beforescriptexecute', beforeScriptExecuteListener)
                         
                         node.parentElement.removeChild(node)
-                    }
                 }
                 else if (blockingType) {
                     // Remove the node from the DOM
@@ -42,7 +37,7 @@ export const observer = new MutationObserver(mutations => {
                 //     // If the src is inside the blacklist and is not inside the whitelist
                 //     if(isOnBlacklist(src)) {
                 //         // We backup a copy of the script node
-                //         //backupIframes.blacklisted.push(node.cloneNode())
+                //         //backupIframes.blacklisted.push(node.cloneNode(true))
 
                 //         if (TYPE_SANDBOX === 'remove'){
                 //             // Remove the node from the DOM

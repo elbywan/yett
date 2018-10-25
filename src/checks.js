@@ -11,7 +11,7 @@ export const isUrl = pattern => {
 */
 export const testPattern = (pattern,node) => {
     if(typeof node === "string"){
-        if ( !node.startsWith('http') && node.slice(-1) == '/'){
+        if ( !node.startsWith('http') && node.slice(-1) == '/' && (node.replace(/\\/g,'').match(/\//g) || []).length == 2){
             const pos = node.indexOf('/')
             const posEnd = node.indexOf('/',pos+1)
             const value = node.substring(pos+1,posEnd-1)
@@ -24,20 +24,22 @@ export const testPattern = (pattern,node) => {
                     tagName = arr_type[0].toUpperCase()
                 }else{
                     type = arr_type[0]
-                }
+                } 
             }
             node = {'tagName': tagName}
             node[type]=value           
         }else{
-            node = {'src': node, 'tagName': 'SCRIPT'}
+            node = {'src': node, 'tagName': null}
         }
     }
     if (! (typeof pattern === "string")){
-        if (node.tagName === "SCRIPT" && node.src)
+        if (pattern instanceof RegExp && node.tagName === "SCRIPT" && node.src)
             return pattern.test(node.src)
         else
             return false
     }
+    if ((pattern.replace(/\\/g,'').match(/\//g) || []).length != 2)
+        return false
     const pos = pattern.indexOf('/')
     const posEnd = pattern.indexOf('/',pos+1)
     let blockingType = pattern.substring(posEnd+1)    
@@ -52,7 +54,7 @@ export const testPattern = (pattern,node) => {
             type = arr_type[0]
         }
     }
-    if (tagName && tagName !== node.tagName) return false;
+    if (tagName && node.tagName && tagName !== node.tagName) return false;
     if (blockingType.length < 1 )
         blockingType = true
     pattern = pattern.substring(pos,posEnd+1)
@@ -60,6 +62,7 @@ export const testPattern = (pattern,node) => {
         if (pattern == '//') return blockingType
         else return false
     }
+    if (pattern == '//') return false
     return eval(pattern).test(node[type]) ? blockingType : false
 }
 /*
@@ -73,25 +76,37 @@ export const testPattern = (pattern,node) => {
 */
 export const isOnBlacklist = (node) => {
     let blockingType = false
-    
-    if (node.type && node.type === TYPE_ATTRIBUTE) return true;
-
+   
     if (patterns.blacklist){
         blockingType =  patterns.blacklist.some(pattern => testPattern(pattern,node))
     }
 
     if (patterns.whitelist){
-        blockingType =  patterns.whitelist.every(pattern => !testPattern(pattern,node))
-    }    
+        let doBlocking =  patterns.whitelist.every(pattern => !testPattern(pattern,node))
 
+        //default action block all scripts not whitelisted      
+        // if (blockingType === false && node.tagName && node.tagName === 'SCRIPT' && node.src)
+        //     blockingType = true
+        blockingType = doBlocking ? blockingType: false
+    }    
+    if (node.type && node.type === TYPE_ATTRIBUTE)
+        blockingType = blockingType ? blockingType: true
     return blockingType
 
 }
 
-export const willBeUnblocked = function(script) {
-    // const src = script.getAttribute('src')
-    return (
-        patterns.blacklist && patterns.blacklist.every(entry => !testPattern(entry,script)) ||
-        patterns.whitelist && patterns.whitelist.some(entry => testPattern(entry,script))
-    )
+export const willBeUnblocked = function(node) {
+    let blockingType = false
+
+    if (!patterns.blacklist || patterns.blacklist == false)
+        return true
+    // if (patterns.blacklist){
+    //     blockingType =  patterns.blacklist.every(pattern => !testPattern(pattern,node))
+    // }
+    //if not in blacklist must be unblocked
+    if (patterns.whitelist){
+        blockingType =  patterns.whitelist.some(pattern => testPattern(pattern,node))
+    }    
+
+    return blockingType
 }

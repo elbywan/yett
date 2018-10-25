@@ -1,4 +1,4 @@
-import { TYPE_ATTRIBUTE, blockNode, blockNodeNoBackup, patterns } from './variables'
+import { TYPE_ATTRIBUTE, blockNodeNoBackup, patterns } from './variables'
 import { isOnBlacklist } from './checks'
 
 const originalDescriptors = {
@@ -21,7 +21,7 @@ document.createElement = function(...args) {
                         return originalDescriptors.src.get.call(this)
                     },
                     set(value) {
-                        if(isOnBlacklist({'src':value,'type':nodeElt.type})) {
+                        if(isOnBlacklist({'src':value,'type':nodeElt.type,'tagName': 'SCRIPT'})) {
                             nodeElt.backup_type = nodeElt.type
                             nodeElt.type = TYPE_ATTRIBUTE
                         }
@@ -52,16 +52,27 @@ document.createElement = function(...args) {
 
     }   
 
+    //monkey patching cannot remove elements only change attributes
     if (patterns.tags.some(element => (tag === element[0]))){
-        let props={ }
+        let props={
+            'type': {
+                set(value) {
+                    if(isOnBlacklist(nodeElt)) {
+                        nodeElt.backup_type = value
+                        value = TYPE_ATTRIBUTE
+                    }                    
+                    return originalDescriptors.type.set.call(this,value)
+                }
+            }            
+         }
         props[patterns.tags[tag]]={
                 get() {
                     return originalDescriptors.src.get.call(this)
                 },
                 set(value) {
-                    if(isOnBlacklist(nodeElt)) {
-                        nodeElt.backup_type = nodeElt.type
-                        nodeElt.type = TYPE_ATTRIBUTE
+                    const blockingType = isOnBlacklist(nodeElt)
+                    if(blockingType) {
+                        value = blockNodeNoBackup(nodeElt,blockingType,patterns.tags[tag])
                     }
                     return originalDescriptors.src.set.call(this, value)
                 }
@@ -70,13 +81,12 @@ document.createElement = function(...args) {
 
         // Monkey patch the setAttribute function so that the setter is called instead
         nodeElt.setAttribute = function(name, value) {
-            if(name === tag)
+            if(name === tag || name === 'type')
                 nodeElt[name] = value
             else
                 HTMLScriptElement.prototype.setAttribute.call(nodeElt, name, value)
         }        
     }
-    if (!blockNodeNoBackup(nodeElt)) nodeElt.style = 'display:none'
-
+    
     return nodeElt
 }
