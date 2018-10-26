@@ -5,7 +5,7 @@
 /node_modules
 
 # build
-/dist
+#/dist
 
 # misc
 .DS_Store
