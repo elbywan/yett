@@ -1,9 +1,11 @@
 language: node_js
+os: osx
 node_js:
-  - "node"
+  - node
 sudo: required
 addons:
   chrome: stable
+  firefox: latest
 script:
   - npm start
 cache: npm
