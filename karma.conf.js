@@ -13,7 +13,7 @@ module.exports = function(config) {
       logLevel: config.LOG_INFO,
       browsers: ['ChromeHeadless', 'FirefoxHeadless', 'Safari'],
       autoWatch: false,
-      concurrency: Infinity,
+      concurrency: 1,
       customLaunchers: {
         FirefoxHeadless: {
           base: 'Firefox',
