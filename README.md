@@ -4,6 +4,7 @@
   <a href="https://www.npmjs.com/package/yett"><img alt="npm-badge" src="https://img.shields.io/npm/v/yett.svg" height="20"></a>
   <a href="https://github.com/snipsco/yett/blob/master/LICENSE"><img alt="license-badge" src="https://img.shields.io/npm/l/yett.svg" height="20"></a>
   <a href="https://bundlephobia.com/result?p=yett"><img alt="size-badge" src="https://img.shields.io/bundlephobia/minzip/yett.svg"></a>
+  <a href="https://travis-ci.org/snipsco/yett"><img src="https://travis-ci.org/snipsco/yett.svg?branch=master" alt="ci-badge" height="20"></a>
   <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
 </h1>
 
