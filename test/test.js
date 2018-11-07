@@ -2,6 +2,16 @@ const scriptDidExecute = scriptName => document.getElementById(scriptName)
 const assertThatScriptDidExecute = scriptName => assert(scriptDidExecute(scriptName), `${scriptName}.js has not been executed`)
 const assertThatScriptDidNotExecute = scriptName => assert(!scriptDidExecute(scriptName), `${scriptName}.js has been executed`)
 
+function getBrowser() {
+    const browsers = ['MSIE', 'Firefox', 'Safari', 'Chrome', 'Opera']
+    const userAgent = navigator.userAgent
+
+    for (let i = browsers.length - 1; i >= 0; i--) {
+        if(userAgent.indexOf(browsers[i]) >= 0)
+            return browsers[i]
+    }
+}
+
 describe('Yett', () => {
     it('should attach to the window object', () => {
         assert(!!window.yett, 'window.yett is not defined')
@@ -20,6 +30,7 @@ describe('Yett', () => {
     })
     it('should not load scripts that have the javascript/blocked attribute', () => {
         assert(
+            !['Chrome', 'Firefox'].includes(getBrowser()) ||
             !performance.getEntriesByName('http://localhost:9876/base/test/scripts/script-blocked.js').length,
             'script-blocked script has been downloaded'
         )
