@@ -35,21 +35,23 @@ describe('Yett', () => {
             'script-blocked script has been downloaded'
         )
     })
-    it('should unblock scripts', async () => {
+    it('should unblock scripts', async function() {
+        this.timeout(10000)
+
         window.yett.unblock('script.js')
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise(resolve => setTimeout(resolve, 1000))
         assertThatScriptDidExecute('script')
         assertThatScriptDidNotExecute('dynamic')
         assertThatScriptDidNotExecute('script-blocked')
 
         window.yett.unblock('dynamic.js')
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise(resolve => setTimeout(resolve, 1000))
         assertThatScriptDidExecute('script')
         assertThatScriptDidExecute('dynamic')
         assertThatScriptDidNotExecute('script-blocked')
 
         window.yett.unblock()
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise(resolve => setTimeout(resolve, 1000))
         assertThatScriptDidExecute('script')
         assertThatScriptDidExecute('dynamic')
         assertThatScriptDidExecute('script-blocked')
