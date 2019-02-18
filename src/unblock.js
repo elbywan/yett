@@ -15,26 +15,36 @@ import {
 const URL_REPLACER_REGEXP = new RegExp('[|\\{}()[\\]^$+*?.]', 'g')
 
 // Unblocks all (or a selection of) blacklisted scripts.
-export const unblock = function(...scriptUrls) {
-
-    if(scriptUrls.length < 1) {
+export const unblock = function(...scriptUrlsOrRegexes) {
+    if(scriptUrlsOrRegexes.length < 1) {
         patterns.blacklist = []
         patterns.whitelist = []
     } else {
         if(patterns.blacklist) {
-            patterns.blacklist = patterns.blacklist.filter(pattern =>
-                scriptUrls.every(url => !pattern.test(url))
-            )
+            patterns.blacklist = patterns.blacklist.filter(pattern => (
+                scriptUrlsOrRegexes.every(urlOrRegexp => {
+                    if(typeof urlOrRegexp === 'string')
+                        return !pattern.test(urlOrRegexp)
+                    else if(urlOrRegexp instanceof RegExp)
+                        return pattern.toString() !== urlOrRegexp.toString()
+                })
+            ))
         }
         if(patterns.whitelist) {
             patterns.whitelist = [
                 ...patterns.whitelist,
-                ...scriptUrls
-                    .map(url => {
-                        const escapedUrl = url.replace(URL_REPLACER_REGEXP, '\\$&')
-                        const permissiveRegexp = '.*' + escapedUrl + '.*'
-                        if(!patterns.whitelist.find(p => p.toString() === permissiveRegexp.toString())) {
-                            return new RegExp(permissiveRegexp)
+                ...scriptUrlsOrRegexes
+                    .map(urlOrRegexp => {
+                        if(typeof urlOrRegexp === 'string') {
+                            const escapedUrl = urlOrRegexp.replace(URL_REPLACER_REGEXP, '\\$&')
+                            const permissiveRegexp = '.*' + escapedUrl + '.*'
+                            if(patterns.whitelist.every(p => p.toString() !== permissiveRegexp.toString())) {
+                                return new RegExp(permissiveRegexp)
+                            }
+                        } else if(urlOrRegexp instanceof RegExp) {
+                            if(patterns.whitelist.every(p => p.toString() !== urlOrRegexp.toString())) {
+                                return urlOrRegexp
+                            }
                         }
                         return null
                     })

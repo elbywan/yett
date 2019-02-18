@@ -38,7 +38,7 @@ describe('Yett', () => {
     it('should unblock scripts', async function() {
         this.timeout(10000)
 
-        window.yett.unblock('script.js')
+        window.yett.unblock(/script\.js$/)
         await new Promise(resolve => setTimeout(resolve, 1000))
         assertThatScriptDidExecute('script')
         assertThatScriptDidNotExecute('dynamic')

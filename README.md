@@ -137,13 +137,13 @@ unblock()
 ### Unblock
 
 ```js
-unblock(...scriptUrls: String[])
+unblock(...scriptUrlsOrRegexes: (String | RegExp)[])
 ```
 
 > Unblocks blacklisted scripts.
 
-If you don't specify a `scriptUrls` argument, all the scripts that were previously blocked will be executed.
-Otherwise, the `scriptUrls` provided will be either removed from the blacklist or added to the whitelist and executed.
+If you don't specify a `scriptUrlsOrRegexes` argument, all the scripts that were previously blocked will be executed.
+Otherwise, the `scriptUrlsOrRegexes` provided will be either removed from the blacklist or added to the whitelist and executed.
 
 ### Build locally
 
