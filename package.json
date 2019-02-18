@@ -1,6 +1,6 @@
 {
   "name": "yett",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A small library that can prevent other scripts from executing.",
   "main": "dist/yett.min.js",
   "keywords": [
