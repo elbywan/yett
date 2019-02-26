@@ -3,7 +3,8 @@ import { isOnBlacklist } from './checks'
 
 // Setup a mutation observer to track DOM insertion
 export const observer = new MutationObserver(mutations => {
-    mutations.forEach(({ addedNodes }) => {
+    for (let i = 0; i < mutations.length; i++) {
+        const { addedNodes } = mutations[i];
         for(let i = 0; i < addedNodes.length; i++) {
             const node = addedNodes[i]
             // For each added script tag
@@ -32,7 +33,7 @@ export const observer = new MutationObserver(mutations => {
                 }
             }
         }
-    })
+    }
 })
 
 // Starts the monitoring
