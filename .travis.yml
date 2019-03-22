@@ -12,7 +12,6 @@ matrix:
       env: WINDOWS=true
       before_install:
         - choco install googlechrome
-        - choco install firefox
 script:
   - npm start
 cache: npm
