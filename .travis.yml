@@ -11,7 +11,7 @@ matrix:
     - os: windows
       env: WINDOWS=true
       before_install:
-        - choco install chromium
+        - choco install googlechrome
         - choco install firefox
 script:
   - npm start
