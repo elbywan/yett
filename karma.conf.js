@@ -11,7 +11,7 @@ module.exports = function(config) {
       port: 9876,
       colors: true,
       logLevel: config.LOG_INFO,
-      browsers: ['ChromeHeadless', 'FirefoxHeadless', 'Safari'],
+      browsers: ['ChromeHeadless', 'FirefoxHeadless', 'Safari', 'IE'],
       autoWatch: false,
       concurrency: 1,
       customLaunchers: {

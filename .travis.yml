@@ -1,11 +1,18 @@
 language: node_js
-os: osx
 node_js:
   - node
-sudo: required
-addons:
-  chrome: stable
-  firefox: latest
+matrix:
+  include:
+    - os: osx
+      addons:
+        chrome: stable
+        firefox: latest
+        sudo: required
+    - os: windows
+      env: WINDOWS=true
+      before_install:
+        - choco install chromium
+        - choco install firefox
 script:
   - npm start
 cache: npm

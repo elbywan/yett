@@ -24,10 +24,13 @@
     "serve": "http-server -c-1 docs",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
     "test:blacklist": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
+    "test:blacklist:windows": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,IE karma.conf.js",
     "test:whitelist": "WHITELIST=1 karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
+    "test:whitelist:windows": "WHITELIST=1 karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,IE karma.conf.js",
     "test": "npm run test:blacklist && npm run test:whitelist",
+    "test:windows": "npm run test:blacklist:windows && npm run test:whitelist:windows",
     "lint": "eslint src",
-    "start": "npm run build && npm run test"
+    "start": "npm run build && if-env WINDOWS=true && npm run test:windows || npm run test"
   },
   "author": "Julien Elbaz",
   "contributors": [
@@ -47,10 +50,12 @@
     "concurrently": "^4.1.0",
     "eslint": "^5.14.0",
     "http-server": "^0.11.1",
-    "karma": "^4.0.0",
+    "if-env": "^1.0.4",
+    "karma": "^4.0.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.1.0",
+    "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^1.3.0",
     "karma-safari-launcher": "^1.0.0",
     "mocha": "^5.2.0",
