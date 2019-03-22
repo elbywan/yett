@@ -18,6 +18,12 @@ module.exports = function(config) {
         FirefoxHeadless: {
           base: 'Firefox',
           flags: [ '-headless' ],
+        },
+        ChromeHeadlessNoSandbox: {
+          base: 'ChromeHeadless',
+          flags: [
+            '--no-sandbox'
+          ]
         }
       },
       files: [
