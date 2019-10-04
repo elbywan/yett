@@ -29,7 +29,7 @@ export const observer = new MutationObserver(mutations => {
                     node.addEventListener('beforescriptexecute', beforeScriptExecuteListener)
 
                     // Remove the node from the DOM
-                    node.parentElement.removeChild(node)
+                    node.parentElement && node.parentElement.removeChild(node)
                 }
             }
         }
