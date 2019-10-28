@@ -90,7 +90,7 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
 <script>
     // Add a global variable *before* yett is loaded.
     YETT_BLACKLIST = [
-        /www\\.google-analytics\\.com/,
+        /www\.google-analytics\.com/,
         /piwik\.php/,
         /cdn\.mxpnl\.com/
     ]
