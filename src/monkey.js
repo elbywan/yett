@@ -13,37 +13,44 @@ document.createElement = function(...args) {
     const originalSetAttribute = scriptElt.setAttribute.bind(scriptElt)
 
     // Define getters / setters to ensure that the script type is properly set
-    Object.defineProperties(scriptElt, {
-        'src': {
-            get() {
-                return scriptElt.getAttribute('src')
-            },
-            set(value) {
-                if(isOnBlacklist(value, scriptElt.type)) {
-                    originalSetAttribute('type', TYPE_ATTRIBUTE)
+    try {
+        Object.defineProperties(scriptElt, {
+            'src': {
+                get() {
+                    return scriptElt.getAttribute('src')
+                },
+                set(value) {
+                    if(isOnBlacklist(value, scriptElt.type)) {
+                        originalSetAttribute('type', TYPE_ATTRIBUTE)
+                    }
+                    originalSetAttribute('src', value)
+                    return true
                 }
-                originalSetAttribute('src', value)
-                return true
+            },
+            'type': {
+                set(value) {
+                    const typeValue =
+                        isOnBlacklist(scriptElt.src, scriptElt.type) ?
+                            TYPE_ATTRIBUTE :
+                        value
+                    originalSetAttribute('type', typeValue)
+                    return true
+                }
             }
-        },
-        'type': {
-            set(value) {
-                const typeValue =
-                    isOnBlacklist(scriptElt.src, scriptElt.type) ?
-                        TYPE_ATTRIBUTE :
-                    value
-                originalSetAttribute('type', typeValue)
-                return true
-            }
-        }
-    })
+        })
 
-    // Monkey patch the setAttribute function so that the setter is called instead
-    scriptElt.setAttribute = function(name, value) {
-        if(name === 'type' || name === 'src')
-            scriptElt[name] = value
-        else
-            HTMLScriptElement.prototype.setAttribute.call(scriptElt, name, value)
+        // Monkey patch the setAttribute function so that the setter is called instead
+        scriptElt.setAttribute = function(name, value) {
+            if(name === 'type' || name === 'src')
+                scriptElt[name] = value
+            else
+                HTMLScriptElement.prototype.setAttribute.call(scriptElt, name, value)
+        }
+    } catch (error) {
+        console.warn(
+            'Yett: unable to prevent script execution for script src ', scriptElt.src, '.\n',
+            'A likely cause would be because you are using a third-party browser extension that monkey patches the "document.createElement" function.'
+        )
     }
 
     return scriptElt

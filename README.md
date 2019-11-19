@@ -188,6 +188,8 @@ Adding this attribute prevents the browser from downloading the script on `Chrom
 
 This library monkey patches `document.createElement`. No way around this.
 
+This means that `yett` is not compatible with third-party browser extensions that also monkey patch this native browser function.
+
 #### Dynamic requests
 
 Scripts loaded using XMLHttpRequest and Fetch are not blocked. It would be trivial to monkey patch them, but most tracking scripts are not loaded using these 2 methods anyway.
