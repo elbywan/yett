@@ -21,7 +21,7 @@ We use `yett` in order to provide [GDPR compliant consent-first-analytics](https
 <br>
 
 <img src="https://cdn.rawgit.com/snipsco/yett/ead29c36/privacy-bar.png" alt="bar"></img>
-<h6 align="center"><i>Analytics scripts are blocked until users Accepts, in production on <a href="https://console.snips.ai">https://snips.ai</a></i></h6>
+<h6 align="center"><i>Analytics scripts are blocked until users Accepts, in production on <a href="https://snips.ai">https://snips.ai</a></i></h6>
 
 <br>
 
