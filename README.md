@@ -82,6 +82,8 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 
 **⚠️ It is strongly recommended (but not necessary) that you [add type attributes](https://github.com/snipsco/yett#add-a-type-attribute-manually) to `<script>` tags having src attributes that you want to block. It has the benefit of preventing the scripts from begin downloaded in major browsers.**
 
+**💡 In any case, if you would like to ensure that cookies are not sent to third-party servers during the initial request you can use the [`crossorigin="anonymous"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute. Check [this link](https://github.com/snipsco/yett/issues/20#issuecomment-599256485) for more details.**
+
 ## Add a blacklist
 
 Yett needs a `blacklist`, which is an array of regexes to test urls against.
