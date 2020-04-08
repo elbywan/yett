@@ -3,6 +3,11 @@ import { isOnBlacklist } from './checks'
 
 const createElementBackup = document.createElement
 
+const originalDescriptors = {
+    src: Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src'),
+    type: Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'type')
+}
+
 // Monkey patch the createElement method to prevent dynamic scripts from executing
 document.createElement = function(...args) {
     // If this is not a script tag, bypass
@@ -10,30 +15,26 @@ document.createElement = function(...args) {
         return createElementBackup.bind(document)(...args)
 
     const scriptElt = createElementBackup.bind(document)(...args)
-    const originalSetAttribute = scriptElt.setAttribute.bind(scriptElt)
 
     // Define getters / setters to ensure that the script type is properly set
     try {
         Object.defineProperties(scriptElt, {
             'src': {
                 get() {
-                    return scriptElt.getAttribute('src')
+                    return originalDescriptors.src.get.call(this)
                 },
                 set(value) {
                     if(isOnBlacklist(value, scriptElt.type)) {
-                        originalSetAttribute('type', TYPE_ATTRIBUTE)
+                        originalDescriptors.type.set.call(this, TYPE_ATTRIBUTE)
                     }
-                    originalSetAttribute('src', value)
+                    originalDescriptors.src.set.call(this, value)
                     return true
                 }
             },
             'type': {
                 set(value) {
-                    const typeValue =
-                        isOnBlacklist(scriptElt.src, scriptElt.type) ?
-                            TYPE_ATTRIBUTE :
-                        value
-                    originalSetAttribute('type', typeValue)
+                    const typeValue = isOnBlacklist(scriptElt.src, scriptElt.type) ? TYPE_ATTRIBUTE : value
+                    originalDescriptors.type.set.call(this, typeValue)
                     return true
                 }
             }
@@ -47,11 +48,11 @@ document.createElement = function(...args) {
                 HTMLScriptElement.prototype.setAttribute.call(scriptElt, name, value)
         }
     } catch (error) {
+        // eslint-disable-next-line
         console.warn(
             'Yett: unable to prevent script execution for script src ', scriptElt.src, '.\n',
             'A likely cause would be because you are using a third-party browser extension that monkey patches the "document.createElement" function.'
         )
     }
-
     return scriptElt
 }
