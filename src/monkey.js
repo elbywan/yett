@@ -28,14 +28,12 @@ document.createElement = function(...args) {
                         originalDescriptors.type.set.call(this, TYPE_ATTRIBUTE)
                     }
                     originalDescriptors.src.set.call(this, value)
-                    return true
                 }
             },
             'type': {
                 set(value) {
                     const typeValue = isOnBlacklist(scriptElt.src, scriptElt.type) ? TYPE_ATTRIBUTE : value
                     originalDescriptors.type.set.call(this, typeValue)
-                    return true
                 }
             }
         })
