@@ -59,19 +59,23 @@ export const unblock = function(...scriptUrlsOrRegexes) {
     for(let i = 0; i < tags.length; i++) {
         const script = tags[i]
         if(willBeUnblocked(script)) {
-            script.type = 'application/javascript'
-            backupScripts.blacklisted.push(script)
+            backupScripts.blacklisted.push([script, 'application/javascript'])
             script.parentElement.removeChild(script)
         }
     }
 
     // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
     let indexOffset = 0;
-    [...backupScripts.blacklisted].forEach((script, index) => {
+    [...backupScripts.blacklisted].forEach(([script, type], index) => {
         if(willBeUnblocked(script)) {
             const scriptNode = document.createElement('script')
             scriptNode.setAttribute('src', script.src)
-            scriptNode.setAttribute('type', 'application/javascript')
+            scriptNode.setAttribute('type', type || 'application/javascript')
+            for(let key in script) {
+                if(key.startsWith("on")) {
+                    scriptNode[key] = script[key]
+                }
+            }
             document.head.appendChild(scriptNode)
             backupScripts.blacklisted.splice(index - indexOffset, 1)
             indexOffset++

@@ -13,8 +13,8 @@ export const observer = new MutationObserver(mutations => {
                 const type = node.type
                 // If the src is inside the blacklist and is not inside the whitelist
                 if(isOnBlacklist(src, type)) {
-                    // We backup a copy of the script node
-                    backupScripts.blacklisted.push(node.cloneNode())
+                    // We backup the node
+                    backupScripts.blacklisted.push([node, node.type])
 
                     // Blocks inline script execution in Safari & Chrome
                     node.type = TYPE_ATTRIBUTE
