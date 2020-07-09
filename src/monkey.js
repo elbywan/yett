@@ -1,19 +1,21 @@
-import { TYPE_ATTRIBUTE, HIDDEN_SRC_ATTRIBUTE } from './variables'
+import { TYPE_ATTRIBUTE, HIDDEN_SRC_ATTRIBUTE, features } from './variables'
 import { isOnBlacklist } from './checks'
 
 const createElementBackup = document.createElement
 
-const originalDescriptors = {
+var originalDescriptors = {
     script: {
       class: HTMLScriptElement,
       src: Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src'),
       type: Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'type')
-    },
-    iframe: {
-      class: HTMLIFrameElement,
-      src: Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src'),
-      type: Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'type')
     }
+}
+
+if (features.iframe) {
+  originalDescriptors.iframe = {
+    class: HTMLIFrameElement,
+    src: Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src')
+  }
 }
 
 // Monkey patch the createElement method to prevent dynamic scripts from executing

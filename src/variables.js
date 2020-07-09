@@ -7,6 +7,10 @@ export const patterns = {
     whitelist: window.YETT_WHITELIST
 }
 
+export const features = {
+    iframe: window.YETT_IFRAME
+}
+
 // Backup list containing the original blacklisted elements
 export const backupElements = {
     blacklisted: []

@@ -25,6 +25,7 @@
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
     "test:blacklist": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
     "test:whitelist": "WHITELIST=1 karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
+    "test:iframe": "IFRAME=1 karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "test": "npm run test:blacklist && npm run test:whitelist",
     "lint": "eslint src",
     "start": "npm run build && npm run test"
@@ -36,6 +37,9 @@
     },
     {
       "name": "Jonas Ohlsson Aden"
+    },
+    {
+      "name": "Matt Sanford"
     }
   ],
   "license": "MIT",
