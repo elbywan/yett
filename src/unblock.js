@@ -1,7 +1,8 @@
 import {
     patterns,
-    backupScripts,
-    TYPE_ATTRIBUTE
+    backupElements,
+    TYPE_ATTRIBUTE,
+    HIDDEN_SRC_ATTRIBUTE
 } from './variables'
 
 import {
@@ -54,30 +55,39 @@ export const unblock = function(...scriptUrlsOrRegexes) {
     }
 
 
-    // Parse existing script tags with a marked type
-    const tags = document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"]`)
+    // Parse existing tags with a marked type
+    const tags = document.querySelectorAll(`script[type="${TYPE_ATTRIBUTE}"], *[${HIDDEN_SRC_ATTRIBUTE}]`)
     for(let i = 0; i < tags.length; i++) {
-        const script = tags[i]
-        if(willBeUnblocked(script)) {
-            backupScripts.blacklisted.push([script, 'application/javascript'])
-            script.parentElement.removeChild(script)
+        const elem = tags[i]
+        if(willBeUnblocked(elem)) {
+            backupElements.blacklisted.push([elem, 'application/javascript'])
+            elem.parentElement.removeChild(elem)
         }
     }
 
     // Exclude 'whitelisted' scripts from the blacklist and append them to <head>
     let indexOffset = 0;
-    [...backupScripts.blacklisted].forEach(([script, type], index) => {
-        if(willBeUnblocked(script)) {
-            const scriptNode = document.createElement('script')
-            scriptNode.setAttribute('src', script.src)
-            scriptNode.setAttribute('type', type || 'application/javascript')
-            for(let key in script) {
+    [...backupElements.blacklisted].forEach(([elem, type], index) => {
+        if(willBeUnblocked(elem)) {
+            const tagName = elem.tagName.toLowerCase();
+            const elementNode = document.createElement(tagName)
+            const stashedSrc = elem.getAttribute(HIDDEN_SRC_ATTRIBUTE);
+            if (stashedSrc) {
+                console.log('Unstashing', stashedSrc);
+                elementNode.setAttribute('src', stashedSrc)
+            } else {
+                console.log('resetting', elem.src);
+                elementNode.setAttribute('type', type || 'application/javascript')
+                elementNode.setAttribute('src', elem.src)
+            }
+
+            for(let key in elem) {
                 if(key.startsWith("on")) {
-                    scriptNode[key] = script[key]
+                    elementNode[key] = elem[key]
                 }
             }
-            document.head.appendChild(scriptNode)
-            backupScripts.blacklisted.splice(index - indexOffset, 1)
+            document.head.appendChild(elementNode)
+            backupElements.blacklisted.splice(index - indexOffset, 1)
             indexOffset++
         }
     })

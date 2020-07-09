@@ -1,4 +1,4 @@
-import { backupScripts, TYPE_ATTRIBUTE } from './variables'
+import { backupElements, TYPE_ATTRIBUTE } from './variables'
 import { isOnBlacklist } from './checks'
 
 // Setup a mutation observer to track DOM insertion
@@ -14,7 +14,7 @@ export const observer = new MutationObserver(mutations => {
                 // If the src is inside the blacklist and is not inside the whitelist
                 if(isOnBlacklist(src, type)) {
                     // We backup the node
-                    backupScripts.blacklisted.push([node, node.type])
+                    backupElements.blacklisted.push([node, node.type])
 
                     // Blocks inline script execution in Safari & Chrome
                     node.type = TYPE_ATTRIBUTE
