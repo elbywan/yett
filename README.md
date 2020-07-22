@@ -2,9 +2,9 @@
   Yett<br>
   <br>
   <a href="https://www.npmjs.com/package/yett"><img alt="npm-badge" src="https://img.shields.io/npm/v/yett.svg" height="20"></a>
-  <a href="https://github.com/snipsco/yett/blob/master/LICENSE"><img alt="license-badge" src="https://img.shields.io/npm/l/yett.svg" height="20"></a>
+  <a href="https://github.com/elbywan/yett/blob/master/LICENSE"><img alt="license-badge" src="https://img.shields.io/npm/l/yett.svg" height="20"></a>
   <a href="https://bundlephobia.com/result?p=yett"><img alt="size-badge" src="https://img.shields.io/bundlephobia/minzip/yett.svg"></a>
-  <a href="https://travis-ci.org/snipsco/yett"><img src="https://travis-ci.org/snipsco/yett.svg?branch=master" alt="ci-badge" height="20"></a>
+  <a href="https://travis-ci.org/elbywan/yett"><img src="https://travis-ci.org/elbywan/yett.svg?branch=master" alt="ci-badge" height="20"></a>
   <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
 </h1>
 
@@ -16,18 +16,18 @@
 
 [❓] **`So, why on Earth would I want to block scripts on my own website?`**
 
-We use `yett` in order to provide [GDPR compliant consent-first-analytics](https://medium.com/snips-ai/gdpr-compliant-website-analytics-putting-users-in-control-684b17a1463f), via an UI like below.
+One way to use `yett` would be to build a [GDPR compliant consent-first-analytics](https://medium.com/snips-ai/gdpr-compliant-website-analytics-putting-users-in-control-684b17a1463f), via an UI like below.
 
 <br>
 
-<img src="https://cdn.rawgit.com/snipsco/yett/ead29c36/privacy-bar.png" alt="bar"></img>
-<h6 align="center"><i>Analytics scripts are blocked until users Accepts, in production on <a href="https://snips.ai">https://snips.ai</a></i></h6>
+<img src="/privacy-bar.png" alt="bar"></img>
+<h6 align="center"><i>Analytics scripts are blocked until users Accepts, (previously) in production at <a href="https://snips.ai">https://snips.ai</a></i></h6>
 
 <br>
 
 Blocking execution of analytics script (until consent is given) can be done manually, but the problem is that analytics providers often provide minified code embeds that you have to include in your html as they are. If you want to exercise control over their execution, then you have to tamper with this minified JS yourself, which is complex and does not scale well if you load several 3rd party scripts.
 
-Another thing to consider is that these scripts first setup a local buffer that record user actions locally, and then upload the data after a remote script is loaded asynchronously. Meaning that if the whole thing is simply wrapped inside a callback *(as some other libraries do)* then every action performed by the user on the web page before the callback gets executed won't get recorded and will never appear in your analytics dashboard.
+Another thing to consider is that these scripts first setup a local buffer that record user actions locally, and then upload the data only after a remote script is loaded asynchronously. Meaning that if the whole thing is simply wrapped inside a callback *(as some other libraries do)* then every action performed by the user on the web page before the callback gets executed won't get recorded and will never appear in your analytics dashboard.
 
 Thus we invented `yett`. Just drop in the script and define a domain blacklist - `yett` will take care of the rest ✨.
 
@@ -39,7 +39,7 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 
 ## Usage
 
-#### [:tv: Demo](https://snipsco.github.io/yett/)
+#### [:tv: Demo](https://elbywan.github.io/yett/)
 
 #### Small example
 
@@ -80,9 +80,9 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 </html>
 ```
 
-**⚠️ It is strongly recommended (but not necessary) that you [add type attributes](https://github.com/snipsco/yett#add-a-type-attribute-manually) to `<script>` tags having src attributes that you want to block. It has the benefit of preventing the scripts from begin downloaded in major browsers.**
+**⚠️ It is strongly recommended (but not necessary) that you [add type attributes](https://github.com/elbywan/yett#add-a-type-attribute-manually) to `<script>` tags having src attributes that you want to block. It has the benefit of preventing the scripts from begin downloaded in major browsers.**
 
-**💡 In any case, if you would like to ensure that cookies are not sent to third-party servers during the initial request you can use the [`crossorigin="anonymous"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute. Check [this link](https://github.com/snipsco/yett/issues/20#issuecomment-599256485) for more details.**
+**💡 In any case, if you would like to ensure that cookies are not sent to third-party servers during the initial request you can use the [`crossorigin="anonymous"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute. Check [this link](https://github.com/elbywan/yett/issues/20#issuecomment-599256485) for more details.**
 
 ## Add a blacklist
 
@@ -151,7 +151,7 @@ Otherwise, the `scriptUrlsOrRegexes` provided will be either removed from the bl
 
 ```bash
 # Clone
-git clone https://github.com/snipsco/yett
+git clone https://github.com/elbywan/yett
 cd yett
 # Install
 npm i
@@ -198,7 +198,7 @@ Scripts loaded using XMLHttpRequest and Fetch are not blocked. It would be trivi
 
 ## Suggestions
 
-If you have any request or feedback for us feel free to open an [issue](https://github.com/snipsco/yett/issues)!
+If you have any request or feedback for us feel free to open an [issue](https://github.com/elbywan/yett/issues)!
 
 So far we’re using this library for analytics, but it could also be used to block advertising until consent, and other things we haven’t thought about yet. We’re excited to see what use cases the community comes up with!
 

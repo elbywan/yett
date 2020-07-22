@@ -13,10 +13,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/snipsco/yett"
+    "url": "https://github.com/elbywan/yett"
   },
   "bugs": {
-    "url": "https://github.com/snipsco/yett/issues"
+    "url": "https://github.com/elbywan/yett/issues"
   },
   "scripts": {
     "build": "npm run lint && rollup -c && rollup -c --o docs/lib/yett.min.js && rollup -c --o test/scripts/yett.min.js",
