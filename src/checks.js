@@ -7,7 +7,7 @@ export const isOnBlacklist = (src, type) => (
 )
 
 export const isBlacklistedSource = function(src) {
-  const srcStart = src === undefined ? "" : src.split("?")[0];
+  const srcStart = src === undefined ? "" : src.toString().split("?")[0];
   return srcStart &&
   (
     (!patterns.blacklist || patterns.blacklist.some(pattern => pattern.test(srcStart))) &&
