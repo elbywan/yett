@@ -11,10 +11,10 @@ export const observer = new MutationObserver(mutations => {
             if(node.nodeType === 1 && node.tagName === 'SCRIPT') {
                 const src = node.src
                 const type = node.type
-                // If the src is inside the blacklist and is not inside the whitelist
+                // If the src is inside the blockList and is not inside the allowList
                 if(isOnBlacklist(src, type)) {
                     // We backup the node
-                    backupScripts.blacklisted.push([node, node.type])
+                    backupScripts.blockListed.push([node, node.type])
 
                     // Blocks inline script execution in Safari & Chrome
                     node.type = TYPE_ATTRIBUTE

@@ -16,14 +16,14 @@ describe('Yett', () => {
     it('should attach to the window object', () => {
         assert(!!window.yett, 'window.yett is not defined')
         assert(
-            !!window.YETT_BLACKLIST || !!window.YETT_WHITELIST,
-            'window.YETT_BLACKLIST or window.YETT_WHITELIST is not defined'
+            !!window.YETT_BLOCK_LIST || !!window.YETT_ALLOW_LIST,
+            'window.YETT_BLOCK_LIST or window.YETT_ALLOW_LIST is not defined'
         )
     })
     it('should not block unwanted scripts', () => {
         assertThatScriptDidExecute('not-blocked')
     })
-    it('should block blacklisted scripts', () => {
+    it('should block blockListed scripts', () => {
         assertThatScriptDidNotExecute('script')
         assertThatScriptDidNotExecute('dynamic')
         assertThatScriptDidNotExecute('script-blocked')

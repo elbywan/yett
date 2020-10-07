@@ -1,4 +1,4 @@
-const fileName = process.env.WHITELIST ? 'whitelist' : 'blacklist'
+const fileName = process.env.ALLOW_LIST ? 'allowList' : 'blockList'
 const customContextFile = `test/index-${fileName}.html`
 
 console.log('karma context:', customContextFile)

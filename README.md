@@ -29,7 +29,7 @@ Blocking execution of analytics script (until consent is given) can be done manu
 
 Another thing to consider is that these scripts first setup a local buffer that record user actions locally, and then upload the data only after a remote script is loaded asynchronously. Meaning that if the whole thing is simply wrapped inside a callback *(as some other libraries do)* then every action performed by the user on the web page before the callback gets executed won't get recorded and will never appear in your analytics dashboard.
 
-Thus we invented `yett`. Just drop in the script and define a domain blacklist - `yett` will take care of the rest ✨.
+Thus we invented `yett`. Just drop in the script and define a domain block list - `yett` will take care of the rest ✨.
 
 ------
 
@@ -49,26 +49,26 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
   <head>
     <!-- Regular head items here… -->
 
-    <!-- 1) Add a blacklist -->
+    <!-- 1) Add a block list -->
     <script>
-      window.YETT_BLACKLIST = [
-        /my-blacklisted-domain/,
+      window.YETT_BLOCK_LIST = [
+        /my-blocked-domain/,
       ]
-      // Or a whitelist
-      window.YETT_WHITELIST = [
-        /my-whitelisted-domain/,
+      // Or a allow list
+      window.YETT_ALLOW_LIST = [
+        /my-allowed-domain/,
       ]
     </script>
     <!-- 2) Include Yett -->
     <script src="https://unpkg.com/yett"></script>
     <!-- 3) Profit! -->
     <!-- This script is blocked -->
-    <script src="https://my-blacklisted-domain.com/file.js"></script>
+    <script src="https://my-blocked-domain.com/file.js"></script>
     <script>
       // This one too
       (function() {
         var script = document.createElement('script')
-        script.setAttribute('src', 'https://my-blacklisted-domain.com/some-file.js')
+        script.setAttribute('src', 'https://my-blocked-domain.com/some-file.js')
         script.setAttribute('type', 'application/javascript')
         document.head.appendChild(script)
       })()
@@ -84,21 +84,21 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
 
 **💡 In any case, if you would like to ensure that cookies are not sent to third-party servers during the initial request you can use the [`crossorigin="anonymous"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute. Check [this link](https://github.com/elbywan/yett/issues/20#issuecomment-599256485) for more details.**
 
-## Add a blacklist
+## Add a block list
 
-Yett needs a `blacklist`, which is an array of regexes to test urls against.
+Yett needs a `block list`, which is an array of regexes to test urls against.
 
 ```html
 <script>
     // Add a global variable *before* yett is loaded.
-    YETT_BLACKLIST = [
+    YETT_BLOCK_LIST = [
         /www\.google-analytics\.com/,
         /piwik\.php/,
         /cdn\.mxpnl\.com/
     ]
     // OR
-    YETT_WHITELIST = [
-        /my-whitelisted-domain/
+    YETT_ALLOW_LIST = [
+        /my-allowed-domain/
     ]
 </script>
 ```
@@ -123,11 +123,11 @@ npm i yett
 ```
 
 ```js
-window.YETT_BLACKLIST = [
+window.YETT_BLOCK_LIST = [
     // ... //
 ]
 // OR
-window.YETT_WHITELIST = [
+window.YETT_ALLOW_LIST = [
     // ... //
 ]
 // Side effects here! Do not import more than once!
@@ -142,10 +142,10 @@ unblock()
 unblock(...scriptUrlsOrRegexes: (String | RegExp)[])
 ```
 
-> Unblocks blacklisted scripts.
+> Unblocks block-listed scripts.
 
 If you don't specify a `scriptUrlsOrRegexes` argument, all the scripts that were previously blocked will be executed.
-Otherwise, the `scriptUrlsOrRegexes` provided will be either removed from the blacklist or added to the whitelist and executed.
+Otherwise, the `scriptUrlsOrRegexes` provided will be either removed from the block list or added to the allow list and executed.
 
 ### Build locally
 

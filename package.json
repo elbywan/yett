@@ -23,9 +23,9 @@
     "watch": "rollup -c -w -o docs/lib/yett.min.js",
     "serve": "http-server -c-1 docs",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
-    "test:blacklist": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
-    "test:whitelist": "WHITELIST=1 karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
-    "test": "npm run test:blacklist && npm run test:whitelist",
+    "test:blockList": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
+    "test:allowList": "ALLOW_LIST=1 karma start --single-run --browsers ChromeHeadless,FirefoxHeadless,Safari karma.conf.js",
+    "test": "npm run test:blockList && npm run test:allowList",
     "lint": "eslint src",
     "start": "npm run build && npm run test"
   },
