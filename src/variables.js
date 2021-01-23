@@ -9,3 +9,5 @@ export const patterns = {
 export const backupScripts = {
     blacklisted: []
 }
+
+export const CONSOLE_WARN = window.YETT_CONSOLE_WARN

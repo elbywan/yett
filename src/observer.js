@@ -1,4 +1,4 @@
-import { backupScripts, TYPE_ATTRIBUTE } from './variables'
+import { backupScripts, TYPE_ATTRIBUTE, CONSOLE_WARN } from './variables'
 import { isOnBlacklist } from './checks'
 
 // Setup a mutation observer to track DOM insertion
@@ -30,6 +30,11 @@ export const observer = new MutationObserver(mutations => {
 
                     // Remove the node from the DOM
                     node.parentElement && node.parentElement.removeChild(node)
+
+                    // Console log
+                    if (CONSOLE_WARN) {
+                        console.warn('Blocked: ' + src);
+                    }
                 }
             }
         }
