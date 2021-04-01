@@ -103,6 +103,16 @@ Yett needs a `blacklist`, which is an array of regexes to test urls against.
 </script>
 ```
 
+### iFrame Support
+
+If you would like to block an analytics systen loaded via iframe (Amazon attribution, for example) you can enable the feature with:
+
+```html
+<script>
+YETT_IFRAME = true
+</script>
+```
+
 ### CDN
 
 
