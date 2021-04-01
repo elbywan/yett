@@ -5,14 +5,16 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <script>
-        window.YETT_BLACKLIST = [
-            /script\.js$/,
-            /script-blocked\.js$/,
-            /dynamic\.js$/
-        ]
-    </script>
     <script src="/base/test/scripts/yett.min.js"></script>
+    <script>
+        yett.init({
+            blacklist: [
+                /script\.js$/,
+                /script-blocked\.js$/,
+                /dynamic\.js$/
+            ]
+        })
+    </script>
     <script src="/base/test/scripts/script.js"></script>
     <script src="/base/test/scripts/script-blocked.js" type="javascript/blocked"></script>
     <script>
