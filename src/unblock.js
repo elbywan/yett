@@ -69,13 +69,14 @@ export const unblock = function(...scriptUrlsOrRegexes) {
     [...backupScripts.blacklisted].forEach(([script, type], index) => {
         if(willBeUnblocked(script)) {
             const scriptNode = document.createElement('script')
-            scriptNode.setAttribute('src', script.src)
-            scriptNode.setAttribute('type', type || 'application/javascript')
-            for(let key in script) {
-                if(key.startsWith("on")) {
-                    scriptNode[key] = script[key]
+            for(let i = 0; i < script.attributes.length; i++) {
+                let attribute = script.attributes[i]
+                if(attribute.name !== 'src' && attribute.name !== 'type') {
+                    scriptNode.setAttribute(attribute.name, script.attributes[i].value)
                 }
             }
+            scriptNode.setAttribute('src', script.src)
+            scriptNode.setAttribute('type', type || 'application/javascript')
             document.head.appendChild(scriptNode)
             backupScripts.blacklisted.splice(index - indexOffset, 1)
             indexOffset++
