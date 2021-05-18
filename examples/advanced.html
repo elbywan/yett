@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script>
+
+        window.YETT_WHITELIST = [/my-whitelisted-domain/] // <!-- whitelist
+        window.YETT_BLACKLIST = []; // <!-- blacklist
+
+        const YETT_SOURCE = 'https://unpkg.com/yett'; // <!-- yett
+        const YETT_LIST = 'disconnect-tracking-protection/entities.json'; // <!-- blacklist file
+
+        // # OPTIONS:
+        // # entities.json - entities: (1322)[{…}}
+        // # services.json - categories:, Advertising: (998) […], Analytics: (205) […], Content: (101) […], Cryptomining: (18) [ {…}], Disconnect: (3) [{…}], FingerprintingGeneral: (39) [{…}], FingerprintingInvasive: (115) […], Social: (15) [{…}]
+
+
+        const request = async () => {
+
+            return await fetch(YETT_LIST).then(response => response.json()).then(response => {
+
+                window.YETT_BLACKLIST.push(new RegExp('my-blacklisted-domain.com'));
+
+                Object.keys(response['entities']).forEach(entity => {
+                    response['entities'][entity]['resources'].forEach(entity => {
+                        window.YETT_BLACKLIST.push(new RegExp(entity));
+                    });
+                })
+
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = YETT_SOURCE;
+                document.getElementsByTagName("head")[0].appendChild(script);
+
+            });
+        }
+
+        console.log(!request());
+
+    </script>
+    <!-- Demo -->
+    <script src="https://my-blacklisted-domain.com/file.js"></script>
+    <script>
+        (function () {
+            var script = document.createElement('script')
+            script.setAttribute('src', 'https://my-blacklisted-domain.com/some-file.js')
+            script.setAttribute('type', 'application/javascript')
+            document.head.appendChild(script)
+        })()
+    </script>
+</head>
+<body>
+<button onclick="window.yett.unblock()">Unblock</button>
+</body>
+</html>
