@@ -20,6 +20,7 @@ document.createElement = function(...args) {
     try {
         Object.defineProperties(scriptElt, {
             'src': {
+                ...originalDescriptors.src,
                 get() {
                     return originalDescriptors.src.get.call(this)
                 },
@@ -31,6 +32,7 @@ document.createElement = function(...args) {
                 }
             },
             'type': {
+                ...originalDescriptors.type,
                 set(value) {
                     const typeValue = isOnBlacklist(scriptElt.src, scriptElt.type) ? TYPE_ATTRIBUTE : value
                     originalDescriptors.type.set.call(this, typeValue)
