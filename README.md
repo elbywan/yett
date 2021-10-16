@@ -62,7 +62,7 @@ And on a side note, it is technically quite amazing to know that **[a few lines 
     <!-- 2) Include Yett -->
     <script src="https://unpkg.com/yett"></script>
     <!-- If you target only modern browsers (!= IE) you should use the following version. It is way smaller! -->
-    <!-- script src="https://unpkg.com/yett/dist/yett.min.modern.js"></script -->
+    <!-- <script src="https://unpkg.com/yett/dist/yett.min.modern.js"></script -->
     <!-- 3) Profit! -->
     <!-- This script is blocked -->
     <script src="https://my-blacklisted-domain.com/file.js"></script>
