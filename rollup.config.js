@@ -1,6 +1,5 @@
-import { uglify } from 'rollup-plugin-uglify'
-import { minify } from 'uglify-es'
-import babel from 'rollup-plugin-babel'
+import { terser } from 'rollup-plugin-terser';
+import { babel } from '@rollup/plugin-babel'
 
 export default {
     input: 'src/index.js',
@@ -12,8 +11,9 @@ export default {
     },
     plugins: [
         babel({
-            exclude: 'node_modules/**'
+            exclude: 'node_modules/**',
+            babelHelpers: 'bundled'
         }),
-        uglify({}, minify)
+        terser()
     ]
 }

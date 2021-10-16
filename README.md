@@ -4,7 +4,7 @@
   <a href="https://www.npmjs.com/package/yett"><img alt="npm-badge" src="https://img.shields.io/npm/v/yett.svg" height="20"></a>
   <a href="https://github.com/elbywan/yett/blob/master/LICENSE"><img alt="license-badge" src="https://img.shields.io/npm/l/yett.svg" height="20"></a>
   <a href="https://bundlephobia.com/result?p=yett"><img alt="size-badge" src="https://img.shields.io/bundlephobia/minzip/yett.svg"></a>
-  <a href="https://travis-ci.org/elbywan/yett"><img src="https://travis-ci.org/elbywan/yett.svg?branch=master" alt="ci-badge" height="20"></a>
+  <a href="https://app.travis-ci.com/elbywan/yett"><img src="https://app.travis-ci.com/elbywan/yett.svg?branch=master" alt="ci-badge" height="20"></a>
   <a href="#browser-compatibility"><img src="https://badges.herokuapp.com/browsers?firefox=60&googlechrome=66&safari=11&iexplore=!9,!10,11&microsoftedge=17" alt="bundle-badge" height="20"></a>
 </h1>
 
@@ -154,11 +154,11 @@ Otherwise, the `scriptUrlsOrRegexes` provided will be either removed from the bl
 git clone https://github.com/elbywan/yett
 cd yett
 # Install
-npm i
+pnpm i
 # Serves demo @ localhost:8080
-npm run dev
+pnpm dev
 # Build for release
-npm run build
+pnpm build
 ```
 
 ## Browser compatibility

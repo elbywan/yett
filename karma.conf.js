@@ -5,8 +5,15 @@ console.log('karma context:', customContextFile)
 
 module.exports = function(config) {
     config.set({
-      frameworks: ['mocha', 'chai'],
       files: ['test/**/*.js'],
+      frameworks: ['mocha', 'chai'],
+      plugins: [
+        require('karma-mocha'),
+        require('karma-chai'),
+        require('karma-chrome-launcher'),
+        require('karma-firefox-launcher'),
+        require('karma-safari-launcher'),
+      ],
       reporters: ['progress'],
       port: 9876,
       colors: true,
@@ -21,14 +28,14 @@ module.exports = function(config) {
         }
       },
       files: [
-        { pattern: 'test/scripts/yett.min.js',  included: false },
-        { pattern: 'test/scripts/not-blocked.js',  included: false },
-        { pattern: 'test/scripts/script.js',  included: false },
-        { pattern: 'test/scripts/script-blocked.js',  included: false },
-        { pattern: 'test/scripts/dynamic.js',  included: false },
+        { pattern: 'test/scripts/yett.min.js',  included: false },
+        { pattern: 'test/scripts/not-blocked.js',  included: false },
+        { pattern: 'test/scripts/script.js',  included: false },
+        { pattern: 'test/scripts/script-blocked.js',  included: false },
+        { pattern: 'test/scripts/dynamic.js',  included: false },
         'test/test.js'
       ],
       customContextFile,
-      clearContext: false
+      clearContext: false,
     })
 }
