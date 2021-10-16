@@ -3,6 +3,7 @@
   "version": "0.2.2",
   "description": "A small library that can prevent other scripts from executing.",
   "main": "dist/yett.min.js",
+  "browser": "dist/yett.min.js",
   "keywords": [
     "block",
     "blocker",
@@ -19,7 +20,7 @@
     "url": "https://github.com/elbywan/yett/issues"
   },
   "scripts": {
-    "build": "npm run lint && rollup -c && rollup -c --o docs/lib/yett.min.js && rollup -c --o test/scripts/yett.min.js",
+    "build": "npm run lint && rollup -c && rollup -c rollup.config.modern.js && rollup -c --o docs/lib/yett.min.js && rollup -c --o test/scripts/yett.min.js",
     "watch": "rollup -c -w -o docs/lib/yett.min.js",
     "serve": "http-server -c-1 docs",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
