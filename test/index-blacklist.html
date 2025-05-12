@@ -9,18 +9,27 @@
         window.YETT_BLACKLIST = [
             /script\.js$/,
             /script-blocked\.js$/,
-            /dynamic\.js$/
+            /script-module\.js$/,
+            /script-module-blocked\.js$/,
+            /dynamic\.js$/,
+            /dynamic-module\.js$/
         ]
     </script>
     <script src="/base/test/scripts/yett.min.js"></script>
     <script src="/base/test/scripts/script.js"></script>
     <script src="/base/test/scripts/script-blocked.js" type="javascript/blocked"></script>
+    <script src="/base/test/scripts/script-module.js" type="module"></script>
+    <script src="/base/test/scripts/script-module-blocked.js" type="javascript/blocked" data-type="module"></script>
     <script>
         (function () {
             var script = document.createElement('script')
             script.setAttribute('src', '/base/test/scripts/dynamic.js')
             script.setAttribute('type', 'application/javascript')
             document.head.appendChild(script)
+            var scriptmodule = document.createElement('script')
+            scriptmodule.setAttribute('src', '/base/test/scripts/dynamic-module.js')
+            scriptmodule.setAttribute('type', 'module')
+            document.head.appendChild(scriptmodule)
         })()
     </script>
 </head>

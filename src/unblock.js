@@ -59,7 +59,8 @@ export const unblock = function(...scriptUrlsOrRegexes) {
     for(let i = 0; i < tags.length; i++) {
         const script = tags[i]
         if(willBeUnblocked(script)) {
-            backupScripts.blacklisted.push([script, 'application/javascript'])
+            const type = (typeof script.dataset['type'] === 'string') ? script.dataset['type'] : 'application/javascript';
+            backupScripts.blacklisted.push([script, type])
             script.parentElement.removeChild(script)
         }
     }
@@ -74,6 +75,9 @@ export const unblock = function(...scriptUrlsOrRegexes) {
                 if(attribute.name !== 'src' && attribute.name !== 'type') {
                     scriptNode.setAttribute(attribute.name, script.attributes[i].value)
                 }
+            }
+            if (typeof script.dataset['type'] === 'string') {
+                type = script.dataset.type
             }
             scriptNode.setAttribute('src', script.src)
             scriptNode.setAttribute('type', type || 'application/javascript')

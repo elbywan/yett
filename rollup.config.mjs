@@ -1,4 +1,4 @@
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import { babel } from '@rollup/plugin-babel'
 
 export default {

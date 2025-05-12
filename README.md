@@ -188,6 +188,12 @@ Adding this attribute prevents the browser from downloading the script on `Chrom
 <script src="..." type="javascript/blocked"></script>
 ```
 
+If you want to prevent a JavaScript module from loading, add the according type in a `data-type` attribute.
+
+```html
+<script src="..." type="javascript/blocked" data-type="module"></script>
+```
+
 #### Monkey patch
 
 This library monkey patches `document.createElement`. No way around this.
